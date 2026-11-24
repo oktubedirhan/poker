@@ -1,6 +1,6 @@
 // Uygulama kabuğunu önbelleğe alır; internet yokken de Poker Okulu açılır.
 // Dosyalar değiştiğinde VERSION'ı artır ki telefonlar yeni sürümü alsın.
-const VERSION = 'v3';
+const VERSION = 'v4';
 const CACHE = `poker-${VERSION}`;
 const SHELL = [
   './',
@@ -73,7 +73,9 @@ const SHELL = [
   './js/ui/sorular.js',
   './js/ui/sayma.js',
   './js/ui/oturum.js',
+  './js/ui/esleme.js',
   './js/ilerleme.js',
+  './js/esitleme.js',
 ];
 
 self.addEventListener('install', (event) => {

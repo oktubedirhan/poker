@@ -8,7 +8,7 @@ export function yildizlar(n, { buyuk = false } = {}) {
     [0, 1, 2].map((i) => el('span', { class: `yildiz${i < n ? ' yildiz--dolu' : ''}`, style: buyuk ? `--s:${i}` : null })));
 }
 
-export function haritaCiz(kok, seviyeler, ilerleme, { onSec } = {}) {
+export function haritaCiz(kok, seviyeler, ilerleme, { onSec, gosterge } = {}) {
   const sira = siradakiSeviye(ilerleme);
   const hicYok = Object.values(ilerleme.seviyeler).every((s) => !s.yildiz);
   const karsilama = el('section', { class: 'karsilama' },
@@ -42,5 +42,6 @@ export function haritaCiz(kok, seviyeler, ilerleme, { onSec } = {}) {
       ),
     ));
   }
+  if (gosterge) kok.append(gosterge);
   kok.append(karsilama, liste);
 }

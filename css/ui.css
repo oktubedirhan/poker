@@ -86,6 +86,7 @@ a.dugme {
 /* ---------- Ayarlar ---------- */
 .ayarlar {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
   text-align: left;
 }
@@ -97,6 +98,129 @@ a.dugme {
 .ayar--tehlike {
   padding-top: var(--space-3);
   border-top: 1px dashed var(--rule);
+}
+
+/* ---------- Cihaz eşleme ---------- */
+.eslesme {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--rule);
+}
+.eslesme__baslik {
+  margin: 0;
+  font-size: var(--t-lg);
+}
+.eslesme .ayar__not {
+  margin: 0;
+}
+.eslesme__dugmeler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.eslesme__durum {
+  margin: 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+.eslesme__durum[data-durum='tamam'] {
+  color: var(--iyi);
+}
+.eslesme__kodsatir {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  justify-content: space-between;
+}
+.eslesme__kod {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--paper-sunk);
+  font-family: var(--font-display);
+  font-size: var(--t-xl);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  user-select: all;
+  overflow-wrap: anywhere;
+}
+.eslesme__etiket {
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+.eslesme__satir {
+  display: flex;
+  gap: var(--space-2);
+}
+.eslesme__giris {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--dokunma);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--t-md);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.eslesme__giris::placeholder {
+  color: var(--ink-muted);
+  opacity: 0.6;
+}
+.eslesme__hata {
+  margin: 0;
+  min-height: 0;
+  color: var(--hata);
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+.eslesme__hata:empty {
+  display: none;
+}
+.eslesme__onay {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--paper-sunk);
+}
+.eslesme__onay .sonuc__butonlar {
+  margin-top: var(--space-2);
+}
+
+/* Haritanın üstündeki sakin eşitleme göstergesi */
+.esitleme-gosterge {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: min(var(--olcu), 100%);
+  margin: 0 auto var(--space-2);
+  color: var(--ink-muted);
+  font-size: var(--t-xs);
+}
+.esitleme-gosterge[hidden] {
+  display: none;
+}
+.esitleme-gosterge__ikon {
+  opacity: 0.7;
+}
+.esitleme-gosterge[data-durum='esitleniyor'] .esitleme-gosterge__ikon {
+  display: inline-block;
+  animation: esitleme-don 1.2s linear infinite;
+}
+@keyframes esitleme-don {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ---------- Masa oturumu ---------- */

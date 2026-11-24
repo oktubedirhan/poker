@@ -5,7 +5,8 @@ import { guvenliRng } from '../motor/rng.js';
 import {
   ilerlemeYukle, ilerlemeKaydet, ilerlemeSifirla, seviyeAcikMi, seviyeSonucuIsle, seviyeYildizi,
 } from '../ilerleme.js';
-import { el, bosalt, modalAc, duyur, bildirim, tumModallariKapat } from './dom.js';
+import { el, bosalt, modalAc, duyur, bildirim, tumModallariKapat, acikModalVarMi } from './dom.js';
+import { esitleme, eslemeBolumu, eslemeGostergesi, esleHashiniIsle } from './esleme.js';
 import { haritaCiz, yildizlar } from './harita.js';
 import { dersEkrani, soruAkisi } from './ders.js';
 import { MasaOturumu } from './oturum.js';
@@ -22,8 +23,28 @@ function ayarlariUygula() {
   document.documentElement.classList.toggle('dort-renk', !!ilerleme.ayarlar.dortRenk);
 }
 
-function kaydet() {
+// ayarAnahtarlari: bu kayıtta değişen ayarlar ('koc', 'dortRenk'); eşliyse kısa gecikmeyle eşitlenir.
+function kaydet(ayarAnahtarlari = []) {
   if (!ilerlemeKaydet(ilerleme)) bildirim('İlerleme bu tarayıcıda kaydedilemiyor (gizli pencere olabilir).');
+  if (ayarAnahtarlari.length) esitleme.ayarDegisti(ayarAnahtarlari);
+  else esitleme.planla();
+}
+
+// Başka cihazdan gelen ilerlemeyi bellekteki nesneye işler (ayarlar nesnesi aynı kalır: açık masa oturumu görsün).
+function uzaktanGelen(yeni) {
+  ilerleme.seviyeler = yeni.seviyeler;
+  Object.assign(ilerleme.ayarlar, yeni.ayarlar);
+  ayarlariUygula();
+  ekraniYenile();
+}
+
+let bekleyenCizim = false;
+// Yalnız harita ve seviye girişi yeniden çizilir; ders, alıştırma ve masa oturumuna dokunulmaz.
+function ekraniYenile() {
+  const ekran = kok.dataset.ekran;
+  if (ekran !== 'harita' && ekran !== 'giris') return;
+  if (acikModalVarMi()) { bekleyenCizim = true; return; }
+  cizim();
 }
 
 function anahtar(metin, deger, degisti, aciklama) {
@@ -45,28 +66,47 @@ function ayarlarAc() {
     const evet = el('button', {
       class: 'dugme dugme--ikincil', type: 'button', text: 'Evet, sıfırla',
       onclick: () => {
+        if (esitleme.esliMi()) {
+          evet.disabled = true;
+          esitleme.herYerdeSifirla().then((bos) => {
+            ilerleme = bos;
+            sifirlaBitti('İlerleme sıfırlandı. Eşli cihazlar bir sonraki eşitlemede sıfırlanır.');
+          }, () => {
+            evet.disabled = false;
+            bildirim('Sıfırlanamadı: sunucuya ulaşılamıyor. İnternete bağlanıp tekrar dene.', 5000);
+          });
+          return;
+        }
         ilerleme = ilerlemeSifirla();
-        ayarlariUygula();
-        m.kapat('sifir');
-        bildirim('İlerleme sıfırlandı.');
-        location.hash = '#/';
-        cizim();
+        sifirlaBitti('İlerleme sıfırlandı.');
       },
     });
     const vazgec = el('button', { class: 'dugme dugme--sade', type: 'button', text: 'Vazgeç', onclick: () => { bosalt(sifirAlan); sifirAlan.append(sifirDugme); sifirDugme.focus(); } });
-    sifirAlan.append(el('p', { class: 'ayar__not', text: 'Bütün yıldızların ve açtığın seviyeler silinecek. Emin misin?' }), el('div', { class: 'sonuc__butonlar' }, evet, vazgec));
+    const uyari = esitleme.esliMi()
+      ? 'Bütün yıldızların ve açtığın seviyeler silinecek. Tüm eşli cihazlarda sıfırlanır. Emin misin?'
+      : 'Bütün yıldızların ve açtığın seviyeler silinecek. Emin misin?';
+    sifirAlan.append(el('p', { class: 'ayar__not', text: uyari }), el('div', { class: 'sonuc__butonlar' }, evet, vazgec));
     evet.focus();
+  }
+  function sifirlaBitti(mesaj) {
+    ayarlariUygula();
+    m.kapat('sifir');
+    bildirim(mesaj);
+    location.hash = '#/';
+    cizim();
   }
   const m = modalAc({
     etiketId: 'ayarlar-baslik',
     sinif: 'ayarlar',
+    onKapat: () => { if (bekleyenCizim) { bekleyenCizim = false; ekraniYenile(); } },
     icerik: [
       el('h2', { class: 'sonuc__baslik', id: 'ayarlar-baslik', text: 'Ayarlar' }),
-      anahtar('Dört renkli deste', !!ilerleme.ayarlar.dortRenk, (v) => { ilerleme.ayarlar.dortRenk = v; ayarlariUygula(); kaydet(); },
+      anahtar('Dört renkli deste', !!ilerleme.ayarlar.dortRenk, (v) => { ilerleme.ayarlar.dortRenk = v; ayarlariUygula(); kaydet(['dortRenk']); },
         'Karo mavi, sinek yeşil olur. Renkleri ayırt etmek kolaylaşır.'),
-      anahtar('Koç (isteğe bağlı seviyelerde)', !!ilerleme.ayarlar.koc, (v) => { ilerleme.ayarlar.koc = v; kaydet(); },
+      anahtar('Koç (isteğe bağlı seviyelerde)', !!ilerleme.ayarlar.koc, (v) => { ilerleme.ayarlar.koc = v; kaydet(['koc']); },
         'Seviye 7–9\'da her kararından sonra koçun notunu gösterir. İlk seviyelerde koç hep açık, finalde kapalı.'),
       el('p', { class: 'ayar__not', text: 'Ses: uygulamada ses yok; önemli olaylar ekran okuyucuya yazıyla bildirilir.' }),
+      eslemeBolumu(),
       sifirAlan,
       el('div', { class: 'sonuc__butonlar' }, el('button', { class: 'dugme dugme--birincil', type: 'button', text: 'Kapat', onclick: () => m.kapat('kapat') })),
     ],
@@ -170,7 +210,7 @@ function gorevEkrani(seviye) {
     kok, seviye, gorev: g,
     tip: g.tur === 'yonlendirmeliEl' ? 'yonlendirmeli' : 'masa',
     ayarlar: ilerleme.ayarlar,
-    onAyar: () => kaydet(),
+    onAyar: (d) => kaydet(Object.keys(d ?? {})),
     onBitti: (s) => sonucGoster(seviye, s, tekrar),
   });
   oturum.baslat();
@@ -226,7 +266,7 @@ function cizim() {
   kok.dataset.ekran = r.ekran;
   if (r.ekran === 'harita') {
     document.title = 'Poker Okulu';
-    haritaCiz(kok, SEVIYELER, ilerleme, { onSec: (id) => git(`#/seviye/${id}`) });
+    haritaCiz(kok, SEVIYELER, ilerleme, { onSec: (id) => git(`#/seviye/${id}`), gosterge: eslemeGostergesi() });
   } else if (r.ekran === 'giris') {
     document.title = `Seviye ${seviye.id}: ${seviye.baslik} · Poker Okulu`;
     seviyeGiris(seviye);
@@ -262,7 +302,19 @@ function ustAraclar() {
   marka?.addEventListener('click', (e) => { e.preventDefault(); git('#/'); });
 }
 
+function eslemeBaglantisi() {
+  esleHashiniIsle({ eslesti: () => { ilerleme = ilerlemeYukle(); ayarlariUygula(); ekraniYenile(); } });
+}
+
 ayarlariUygula();
 ustAraclar();
-window.addEventListener('hashchange', cizim);
+window.addEventListener('hashchange', () => { cizim(); eslemeBaglantisi(); });
 cizim();
+
+// Eşitleme: eşleme yoksa hiçbir ağ isteği yapılmaz (esitleme.js her tetikte kendisi kontrol eder).
+esitleme.ilerlemeDinle(({ ilerleme: yeni }) => uzaktanGelen(yeni));
+esitleme.baslat();
+eslemeBaglantisi();
+esitleme.otomatik();
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') esitleme.otomatik(); });
+window.addEventListener('online', () => { esitleme.esitle(); });
