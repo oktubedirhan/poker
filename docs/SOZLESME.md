@@ -239,3 +239,5 @@ Kart DOM: `<div class="kart" data-kart="Ah" data-renk="h"></div>`; arka yüz `<d
 - (Motor A) Board otomatik açılması: konuşabilecek ≤1 oyuncu kalıp diğerleri all-in ise. Herkes fold edince board açılmaz.
 - (Motor A) Ekler: `gorunum.kucukBlind/buyukBlind`, `Deste.yakilanlar()`, `puanHesapla(kartlar)` (degerlendirici.js; equity döngüleri için hızlı yol), `hazirKartlar.insan` → `'sen'`.
 - (Motor A) Kaybeden showdown'da muck eder (kartı açılmaz); herkes all-in ise tüm eller açılır.
+- (Analiz D) Ham `yeniEl()/eylem()` olayları tüm kartları içerir; UI yalnız `gorunum(id).gecmis` ya da filtrelenmiş olay kullanır.
+- (Analiz D) outs.toplam: floş, sıralı, set/ful/kare ve çekiş yoksa over kart eşleşmesi; iki çift/düşük çift out sayılmaz. koc.js ek: elBilgisi, elAdi, chenPuani, preflopSinifi; bot.js ek: elGucu.
