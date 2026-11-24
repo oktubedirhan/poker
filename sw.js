@@ -1,6 +1,6 @@
 // Uygulama kabuğunu önbelleğe alır; internet yokken de Poker Okulu açılır.
 // Dosyalar değiştiğinde VERSION'ı artır ki telefonlar yeni sürümü alsın.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = `poker-${VERSION}`;
 const SHELL = [
   './',
@@ -12,6 +12,7 @@ const SHELL = [
   './css/kart.css',
   './css/masa.css',
   './css/kontroller.css',
+  './css/ui.css',
   // Yazı tipleri
   './fonts/fraunces-normal-400-700-latin-ext.woff2',
   './fonts/fraunces-normal-400-700-latin.woff2',
@@ -66,6 +67,12 @@ const SHELL = [
   './js/ui/koc.js',
   './js/ui/ders.js',
   './js/ui/harita.js',
+  './js/ui/dom.js',
+  './js/ui/mantik.js',
+  './js/ui/soruUret.js',
+  './js/ui/sorular.js',
+  './js/ui/sayma.js',
+  './js/ui/oturum.js',
   './js/ilerleme.js',
 ];
 

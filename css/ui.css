@@ -1,0 +1,304 @@
+/* Arayüz birleştirme ekleri (E ajanı): ekran düzenleri ve TASARIM.md'de olmayan küçük parçalar.
+   Mevcut sınıflara dokunmaz; yalnız yeni sınıflar ve yerleşim. */
+
+/* ---------- Genel ---------- */
+.geri-bag {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--dokunma);
+  margin-bottom: var(--space-2);
+  color: var(--ink-muted);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+.geri-bag:hover {
+  color: var(--accent);
+}
+.ekran-baslik {
+  width: min(var(--olcu), 100%);
+  margin: 0 auto var(--space-4);
+  font-size: var(--t-xl);
+}
+a.dugme {
+  text-decoration: none;
+}
+
+/* ---------- Seviye girişi ---------- */
+.seviye-giris {
+  width: min(var(--olcu), 100%);
+  margin-inline: auto;
+}
+.seviye-giris h2 {
+  margin: 0;
+  font-size: var(--t-xl);
+}
+.seviye-giris__ozet {
+  margin: 0 0 var(--space-4);
+  font-size: var(--t-lg);
+}
+.seviye-giris__ara {
+  margin: 0 0 var(--space-2);
+  font-size: var(--t-md);
+}
+.seviye-giris__liste {
+  margin: 0 0 var(--space-4);
+  padding-left: 1.2rem;
+  display: grid;
+  gap: var(--space-1);
+}
+.seviye-giris__butonlar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+.alistirma-sonu {
+  width: min(var(--olcu), 100%);
+  margin-inline: auto;
+}
+.alistirma-sonu h3 {
+  margin-top: 0;
+}
+
+/* ---------- Soru ekleri ---------- */
+.soru__sayac {
+  margin: 0;
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: var(--t-sm);
+}
+.soru__ek {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.soru__ek-etiket {
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+.karsilastirma__esit.secenek--dogru {
+  border-color: var(--iyi);
+  background: var(--iyi-soft);
+}
+
+/* ---------- Ayarlar ---------- */
+.ayarlar {
+  display: grid;
+  gap: var(--space-4);
+  text-align: left;
+}
+.ayar__not {
+  margin: var(--space-1) 0 0;
+  color: var(--ink-muted);
+  font-size: var(--t-sm);
+}
+.ayar--tehlike {
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--rule);
+}
+
+/* ---------- Masa oturumu ---------- */
+.oturum__ust {
+  max-width: 640px;
+  margin: 0 auto var(--space-3);
+}
+.oturum__seviye {
+  margin: 0;
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+}
+.oturum__baslik {
+  margin: 0 0 var(--space-1);
+  font-size: var(--t-xl);
+}
+.oturum__hedef {
+  margin: 0 0 var(--space-2);
+  font-size: var(--t-sm);
+}
+.oturum__durum {
+  margin: 0;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--paper-sunk);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.oturum__durum:empty {
+  display: none;
+}
+.oturum__alan {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'masa' 'eylem' 'koc' 'sayma' 'rakip';
+  gap: 0;
+}
+.oturum__masa { grid-area: masa; min-width: 0; }
+.oturum__koc { grid-area: koc; min-width: 0; }
+.oturum__eylem { grid-area: eylem; min-width: 0; }
+.oturum__sayma { grid-area: sayma; min-width: 0; }
+.oturum__rakip { grid-area: rakip; min-width: 0; }
+.oturum__eylem {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+@media (min-width: 760px) {
+  .oturum__eylem {
+    position: static;
+  }
+}
+.koc-alani {
+  display: grid;
+}
+.koc-alani:empty {
+  display: none;
+}
+.oturum__koc-anahtar {
+  display: flex;
+  max-width: 440px;
+  margin: var(--space-3) auto 0;
+}
+.out-ipucu {
+  max-width: 440px;
+  margin: var(--space-3) auto 0;
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--fosfor);
+  background: var(--paper-raised);
+  border-radius: var(--radius-md);
+  font-size: var(--t-sm);
+}
+.sayma__not {
+  margin: var(--space-3) 0 0;
+  font-size: var(--t-xs);
+  color: var(--ink-muted);
+}
+.rakipler {
+  max-width: 440px;
+  margin: var(--space-4) auto 0;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--t-sm);
+}
+.rakipler summary {
+  cursor: pointer;
+  font-weight: 600;
+  min-height: 32px;
+}
+.rakipler ul {
+  margin: var(--space-2) 0 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: var(--space-2);
+}
+.eylem-cubugu__butonlar > :only-child {
+  grid-column: 1 / -1;
+}
+.oturum__masa {
+  position: relative;
+}
+.ipucu-dugme {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+.ipucu-dugme:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.ara-soru {
+  width: min(36rem, 100%);
+  max-height: calc(100dvh - 2 * var(--space-4));
+  overflow-y: auto;
+  text-align: left;
+}
+.ara-soru__ust {
+  margin: 0 0 var(--space-2);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+@media (min-width: 1040px) {
+  .oturum__ust {
+    max-width: none;
+  }
+  .oturum__alan {
+    grid-template-columns: minmax(0, 1fr) 330px;
+    grid-template-areas:
+      'masa koc'
+      'masa sayma'
+      'eylem sayma'
+      'eylem rakip';
+    grid-template-rows: auto auto auto 1fr;
+    column-gap: var(--space-5);
+    align-items: start;
+  }
+  .oturum__alan .koc,
+  .oturum__alan .out-ipucu,
+  .oturum__alan .sayma,
+  .oturum__alan .rakipler,
+  .oturum__alan .oturum__koc-anahtar {
+    max-width: none;
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+  .oturum__alan .say-hucre {
+    font-size: 10px;
+  }
+  /* Masa bu düzende ~670px (tasarım 960px): kart ve bahis kaymalarını aynı oranla (~0.7) küçült */
+  .oturum__alan .masa {
+    --k: 1;
+    --kw-insan: 60px;
+  }
+  .oturum__alan .masa[data-oyuncu-sayisi] {
+    --kw-rakip: 42px;
+  }
+  .oturum__alan .masa__board .kart {
+    --kw: 54px;
+  }
+}
+
+/* ---------- Yakılan kartlar (pot şeridinde) ---------- */
+.masa__yakilan {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 6px;
+  padding-left: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+  color: var(--kece-yazi-soluk);
+}
+.masa__yakilan[hidden] {
+  display: none;
+}
+.masa__yakilan .kart {
+  --kw: 11px;
+  box-shadow: none;
+}
+.masa__yakilan-yazi {
+  margin-left: 4px;
+}
+.masa__yakilan--yeni {
+  animation: yakma-yeni 0.6s ease-out;
+}
+@keyframes yakma-yeni {
+  0% { transform: scale(1.25); color: var(--altin); }
+  100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .masa__yakilan--yeni {
+    animation: none;
+  }
+}
+
+/* Programla odaklanan başlıklar (ekran değişiminde) halka göstermesin */
+[tabindex='-1']:focus {
+  outline: none;
+}
