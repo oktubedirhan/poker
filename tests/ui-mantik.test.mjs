@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {
   metinParcala, yildizHesapla, quizSonucu, masaSonucu, yonlendirmeliSonucu, siraHesapla, enIyi5Dogrula,
   hangisiGucluCoz, gorunurOlay, olayMetni, eylemEtiketi, sonucMetni, hizliTutarlar, kaydiriciDegeri,
-  sayiBicim, isaretliBicim, yuzde, ayrintiSatirlari, sonrakiKartSorusu, siraliTamamlayanlar, quizSorulariSec,
+  sayiBicim, isaretliBicim, yuzde, kararSay, ayrintiSatirlari, sonrakiKartSorusu, siraliTamamlayanlar, quizSorulariSec,
 } from '../js/ui/mantik.js';
 import { soruHazirla, outSorusuUret } from '../js/ui/soruUret.js';
 import { outlariBul } from '../js/analiz/outs.js';
@@ -34,6 +34,20 @@ test('quiz ve yönlendirmeli sonuç', () => {
   const g = { yildiz: [1, 1, 1] };
   assert.equal(yonlendirmeliSonucu(g, { tamamlandi: true, foldEtti: false }).yildiz, 3);
   assert.equal(yonlendirmeliSonucu(g, { tamamlandi: true, foldEtti: true }).yildiz, 0);
+});
+
+test('kararSay: net = önemli iyi − hata, en az 0; bedava iyi sayılmaz', () => {
+  const d = { iyiKarar: 0 };
+  kararSay(d, { not: 'iyi', onemli: false }); // bedava check
+  assert.equal(d.iyiKarar, 0);
+  kararSay(d, { not: 'hata', onemli: true });
+  assert.equal(d.iyiKarar, 0); // negatife düşmez
+  kararSay(d, { not: 'iyi', onemli: true });
+  kararSay(d, { not: 'iyi', onemli: true });
+  kararSay(d, { not: 'supheli', onemli: true });
+  assert.equal(d.iyiKarar, 1); // 2 iyi − 1 hata
+  kararSay(d, { not: 'iyi', onemli: true });
+  assert.deepEqual([d.onemliIyi, d.hataKarar, d.iyiKarar], [3, 1, 2]);
 });
 
 test('masaSonucu: hedef yorumları ve elenme', () => {

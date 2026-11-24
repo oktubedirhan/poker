@@ -1,6 +1,6 @@
 // Uygulama kabuğunu önbelleğe alır; internet yokken de Poker Okulu açılır.
 // Dosyalar değiştiğinde VERSION'ı artır ki telefonlar yeni sürümü alsın.
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CACHE = `poker-${VERSION}`;
 const SHELL = [
   './',
@@ -77,20 +77,12 @@ const SHELL = [
 ];
 
 self.addEventListener('install', (event) => {
-  // Tek bir dosya eksikse bütün kurulum çökmesin (geliştirme sırasında js dosyaları yazılıyor olabilir):
-  // her dosya ayrı eklenir, olmayanlar atlanır.
+  // Atomik kurulum: kabuk dosyalarından biri bile eksikse kurulum başarısız olur ve eski sürüm
+  // çalışmaya devam eder (yarım önbellekle çevrimdışı açılış olmaz). cache: 'reload' HTTP önbelleğini atlar.
   event.waitUntil(
     caches
       .open(CACHE)
-      .then((cache) =>
-        Promise.all(
-          SHELL.map((url) =>
-            cache.add(url).catch(() => {
-              /* eksik dosya: sonraki ağ isteğinde önbelleğe girer */
-            })
-          )
-        )
-      )
+      .then((cache) => cache.addAll(SHELL.map((u) => new Request(u, { cache: 'reload' }))))
       .then(() => self.skipWaiting())
   );
 });

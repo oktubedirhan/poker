@@ -144,16 +144,25 @@ function preflopAyrinti(gorunum, d, rng) {
 
 const NOT = (not, baslik, mesaj, ayrinti) => ({ not, baslik, mesaj, ayrinti });
 
+// onemli: oyuncu bir bahisle karşılaştıysa (call miktarı > 0 iken fold/call/raise) ya da kendisi
+// bet/raise yaptıysa true. Bedava check (ve bedava kararlar) false: görev puanına yalnız önemli
+// 'iyi' kararlar sayılır.
+export function onemliKararMi(cagri, tur) {
+  const agresif = tur === 'bet' || tur === 'raise' || tur === 'allin';
+  return agresif || (cagri > 0 && (tur === 'fold' || tur === 'call'));
+}
+
 export function kararDegerlendir(gorunum, eylem, { rng } = {}) {
   const ey = eylemNormal(eylem);
   const tur = ey.tur;
   const d = durumCikar(gorunum);
   if (!gorunum.benimKartlarim) {
-    return NOT('iyi', 'Değerlendirme yok', 'Kartların bilinmediği için bu karar değerlendirilemedi.', { equity: null, gerekenEquity: null, outs: 0 });
+    return { ...NOT('iyi', 'Değerlendirme yok', 'Kartların bilinmediği için bu karar değerlendirilemedi.', { equity: null, gerekenEquity: null, outs: 0 }), onemli: false };
   }
-  return gorunum.sokak === 'preflop'
+  const sonuc = gorunum.sokak === 'preflop'
     ? preflopDegerlendir(gorunum, tur, ey, d, rng)
     : postflopDegerlendir(gorunum, tur, ey, d, rng);
+  return { ...sonuc, onemli: onemliKararMi(d.cagri, tur) };
 }
 
 function preflopDegerlendir(gorunum, tur, ey, d, rng) {

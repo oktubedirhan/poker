@@ -14,6 +14,15 @@
         "value": "instrument sans",
         "createdAt": "2026-11-24T19:47:17.882Z",
         "reason": "plan: poker must match bedirhanoktu.dev Defter design; same self-hosted font as site fonts.css"
+      },
+      {
+        "rule": "radial-halo",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-24T20:45:49.663Z",
+        "reason": "Claude (chief): only radial gradients are the poker felt's lamp shading (css/masa.css:34) and the Defter dot grid copied from bedirhanoktu.dev; domain-appropriate, not a decorative page halo"
       }
     ]
   }

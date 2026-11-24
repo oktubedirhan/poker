@@ -18,7 +18,7 @@ import { soruCiz } from './sorular.js';
 import { soruHazirla } from './soruUret.js';
 import {
   gorunurOlay, olayMetni, masaSonucu, yonlendirmeliSonucu, hedefDurumMetni, hedefTarifi, siraHesapla,
-  sokakAdi, ONERI_AD, sayiBicim,
+  sokakAdi, ONERI_AD, sayiBicim, kararSay,
 } from './mantik.js';
 
 const IPTAL = Symbol('iptal');
@@ -42,7 +42,7 @@ export class MasaOturumu {
     this._insanCoz = null;
     this._insanRed = null;
     this.hiz = hareketAzMi() ? 0.15 : 1;
-    this.durum = { netCip: 0, iyiKarar: 0, elendi: false, sira: null, oynananEl: 0, kalanOyuncu: 0, araDogru: 0, araToplam: 0, foldEtti: false };
+    this.durum = { netCip: 0, iyiKarar: 0, onemliIyi: 0, hataKarar: 0, elendi: false, sira: null, oynananEl: 0, kalanOyuncu: 0, araDogru: 0, araToplam: 0, foldEtti: false };
     this.baslangic = Date.now();
     this._tus = (e) => this._tusIsle(e);
   }
@@ -114,10 +114,13 @@ export class MasaOturumu {
     }
     this.alan = el('div', { class: 'oturum__alan' },
       el('div', { class: 'oturum__masa' }, this.gorunum.kok, this.ipucuDugme),
-      el('div', { class: 'oturum__koc' }, yan, this.outSatiri, this.kocKutu),
       el('div', { class: 'oturum__eylem' }, this.cubuk.kok),
-      this.sayma ? el('div', { class: 'oturum__sayma' }, this.sayma.kok) : null,
-      el('div', { class: 'oturum__rakip' }, rakipler),
+      // Yan panel: telefonda display: contents (alt alta), masaüstünde masanın yanında tek sütun
+      el('div', { class: 'oturum__yan' },
+        el('div', { class: 'oturum__koc' }, yan, this.outSatiri, this.kocKutu),
+        this.sayma ? el('div', { class: 'oturum__sayma' }, this.sayma.kok) : null,
+        el('div', { class: 'oturum__rakip' }, rakipler),
+      ),
     );
     this.kok.append(el('div', { class: 'oturum' }, ust, this.alan));
     this.cubuk.bekle('Kartlar dağıtılıyor…');
@@ -393,7 +396,7 @@ export class MasaOturumu {
       return;
     }
     if (!d) return;
-    if (d.not === 'iyi') this.durum.iyiKarar++;
+    kararSay(this.durum, d);
     if (this._kocGorunur()) {
       this._kocNotu(d);
       duyur(`Koç: ${d.baslik}. ${d.mesaj}`);

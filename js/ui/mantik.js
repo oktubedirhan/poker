@@ -80,6 +80,16 @@ export function siraHesapla({ benimCip, digerCipler, elendi }) {
   return 1 + kalan.filter((c) => c > benimCip).length;
 }
 
+// Koç notunu görev sayacına işler. Yalnız önemli (bahisle karşılaşılan ya da bahis yapılan) 'iyi'
+// kararlar +1, her 'hata' −1; net (iyiKarar) en az 0. Bedava check gibi kararlar puan getirmez.
+export function kararSay(durum, not) {
+  if (!not) return durum;
+  if (not.not === 'iyi' && not.onemli) durum.onemliIyi = (durum.onemliIyi ?? 0) + 1;
+  if (not.not === 'hata') durum.hataKarar = (durum.hataKarar ?? 0) + 1;
+  durum.iyiKarar = Math.max(0, (durum.onemliIyi ?? 0) - (durum.hataKarar ?? 0));
+  return durum;
+}
+
 // durum: { netCip, iyiKarar, elendi, sira, oynananEl }
 export function hedefDegeri(hedef, durum) {
   switch (hedef?.tur) {
@@ -103,12 +113,13 @@ export function masaSonucu(gorev, durum) {
   let ozet;
   if (durum.elendi && hedef.tur !== 'birinciOl') ozet = 'Fişlerin bitti, görev başarısız. Bir daha dene.';
   else if (hedef.tur === 'cipKazan') ozet = `${durum.oynananEl} elde net ${isaretliBicim(durum.netCip)} fiş. Hedef: +${sayiBicim(gorev.yildiz[0])}.`;
-  else if (hedef.tur === 'dogruKarar') ozet = `${durum.oynananEl} elde ${durum.iyiKarar} iyi karar verdin. Hedef: ${gorev.yildiz[0]}.`;
+  else if (hedef.tur === 'dogruKarar') ozet = `${durum.oynananEl} elde net ${durum.iyiKarar} iyi karar (önemli iyi kararlar − hatalar). Hedef: ${gorev.yildiz[0]}.`;
   else if (hedef.tur === 'birinciOl') ozet = `Turnuvayı ${durum.sira}. sırada bitirdin.`;
   else ozet = `${durum.oynananEl} el oynadın.`;
 
   const istatistik = [['El', String(durum.oynananEl)], ['Net fiş', isaretliBicim(durum.netCip)]];
-  if (hedef.tur === 'dogruKarar' || durum.iyiKarar > 0) istatistik.push(['İyi karar', String(durum.iyiKarar)]);
+  if (hedef.tur === 'dogruKarar' || durum.iyiKarar > 0) istatistik.push(['Net iyi karar', String(durum.iyiKarar)]);
+  if (hedef.tur === 'dogruKarar' && durum.hataKarar) istatistik.push(['Hata', String(durum.hataKarar)]);
   if (hedef.tur === 'birinciOl') istatistik.push(['Sıra', `${durum.sira}.`]);
   return { yildiz, basarili: yildiz > 0, deger, ozet, istatistik };
 }
@@ -117,7 +128,7 @@ export function hedefDurumMetni(gorev, durum) {
   const h = gorev.hedef;
   if (!h) return '';
   if (h.tur === 'cipKazan') return `Net ${isaretliBicim(durum.netCip)} · hedef +${sayiBicim(gorev.yildiz[0])}`;
-  if (h.tur === 'dogruKarar') return `İyi karar ${durum.iyiKarar} · hedef ${gorev.yildiz[0]}`;
+  if (h.tur === 'dogruKarar') return `Net iyi karar ${durum.iyiKarar} · hedef ${gorev.yildiz[0]}`;
   if (h.tur === 'hayattaKal') return `Hayatta kal: ${durum.oynananEl}/${gorev.elSayisi}`;
   if (h.tur === 'birinciOl') return `Masada ${durum.kalanOyuncu ?? '?'} oyuncu · birinci ol`;
   return '';
@@ -128,7 +139,7 @@ export function hedefTarifi(gorev) {
   if (!h) return '';
   const el = `${gorev.elSayisi} el`;
   if (h.tur === 'cipKazan') return `${el} oyna, en az +${sayiBicim(gorev.yildiz[0])} fiş kazan. ${sayiBicim(gorev.yildiz[1])} ve ${sayiBicim(gorev.yildiz[2])} fişte daha çok yıldız.`;
-  if (h.tur === 'dogruKarar') return `${el} oyna, koçtan en az ${gorev.yildiz[0]} "iyi karar" notu al. Fişlerin bitmesin.`;
+  if (h.tur === 'dogruKarar') return `${el} oyna. Bahisle karşılaştığın ya da bahis yaptığın kararlarda koçun her "iyi" notu +1, her hata −1 sayılır; en az ${gorev.yildiz[0]} net puan topla. Fişlerin bitmesin.`;
   if (h.tur === 'hayattaKal') return `${el} boyunca fişlerin bitmesin.`;
   if (h.tur === 'birinciOl') return 'Blind\'ler her 10 elde artar. Son kalan ol: 1. olursan 3 yıldız, 2. olursan 2, 3. olursan 1.';
   return '';

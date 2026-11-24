@@ -166,7 +166,8 @@ export class Sayac {
 ```js
 export function kararDegerlendir(gorunum, eylem, { rng } = {})
 // İnsan oyuncunun eylemini o anki duruma göre değerlendirir (equity vs pot oranı, el gücü, pozisyon).
-// → { not: 'iyi'|'supheli'|'hata', baslik, mesaj, ayrinti: { equity, gerekenEquity, outs } }
+// → { not: 'iyi'|'supheli'|'hata', baslik, mesaj, ayrinti: { equity, gerekenEquity, outs }, onemli }
+// onemli: bahisle karşılaşıldıysa (call > 0 iken fold/call/raise) ya da bet/raise yapıldıysa true; bedava check false.
 export function ipucu(gorunum, { rng } = {})
 // Eylemden ÖNCE öneri. → { onerilen: tur, mesaj, ayrinti }
 ```
@@ -229,7 +230,7 @@ Kart DOM: `<div class="kart" data-kart="Ah" data-renk="h"></div>`; arka yüz `<d
 `npm test` → `node --test "tests/**/*.test.mjs"`. Her modülün kendi `tests/<modul>.test.mjs` dosyası. Rastgelelik testlerde `tohumluRng` ile.
 
 ## Ek kararlar (şef, dalga 1 sonrası)
-- `hedef.miktar`: `cipKazan` → başlangıca göre net fiş kazancı; `dogruKarar` → koçun 'iyi' notu verdiği karar sayısı; `hayattaKal` → elSayisi kadar el sonunda elenmemiş olmak; `birinciOl` → `yildiz: [3,2,1]` = bitirilen en kötü sıra (1. → 3 yıldız …).
+- `hedef.miktar`: `cipKazan` → başlangıca göre net fiş kazancı; `dogruKarar` → net karar puanı: koçun `onemli: true` (bahisle karşılaşılan ya da bahis yapılan) kararlarda verdiği 'iyi' not sayısı − 'hata' sayısı, en az 0 (bedava check puan getirmez); `hayattaKal` → elSayisi kadar el sonunda elenmemiş olmak; `birinciOl` → `yildiz: [3,2,1]` = bitirilen en kötü sıra (1. → 3 yıldız …).
 - `yildiz` eşikleri hedefle aynı birimde (artan: 1, 2, 3 yıldız için gereken değer); birinciOl istisnadır.
 - `araSorular.her`: **el** sayısı (her n elin sonunda bir soru).
 - `potOrani` sorusunda `pot` rakip bahsi dahil mevcut pot, `call` eklenecek miktar; gereken equity = call/(pot+call).

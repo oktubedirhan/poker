@@ -59,8 +59,9 @@ export default {
   gorev: {
     tur: 'masa', botlar: ['pasifAcemi', 'sikiPasif'], baslangicCip: 1000, kucukBlind: 10, buyukBlind: 20,
     desteModu: 'elBasi', elSayisi: 12,
-    hedef: { tur: 'dogruKarar', miktar: 6 },
-    yildiz: [6, 9, 12],
+    // Net = önemli 'iyi' − 'hata'. Ölçüm (200 tohumlu oturum, 12 el): pasifAcemi ort. 7,3; akilli ort. 10,4.
+    hedef: { tur: 'dogruKarar', miktar: 7 },
+    yildiz: [7, 9, 10],
   },
   ozellikler: { koc: 'acik', saymaPaneli: true, outIpucu: true },
 };

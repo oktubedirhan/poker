@@ -58,6 +58,23 @@ test('preflop: bedava check atılmaz; pahalı raise\'e zayıf el call etmek hata
   assert.equal(not(pahali, 'fold').not, 'iyi');
 });
 
+test('onemli: yalnız bahisle karşılaşılan ya da bahis yapılan kararlar', () => {
+  // Bedava check (preflop BB ve postflop) önemli değil
+  const bb = preflop(['9d', '2c'], 'BB');
+  assert.equal(not(bb, 'check').onemli, false);
+  assert.equal(not(bb, 'raise', 60).onemli, true);
+  const bos = gv({ el: ['7h', '2d'], board: ['Ac', 'Kd', '9s'], pot: 100 });
+  assert.equal(not(bos, 'check').not, 'iyi');
+  assert.equal(not(bos, 'check').onemli, false);
+  assert.equal(not(bos, 'fold').onemli, false); // bedava fold: hata ama önemli sayılmaz
+  assert.equal(not(bos, 'bet', 50).onemli, true);
+  // Bahisle karşılaşınca fold / call / raise önemli
+  const bahis = gv({ el: ['7h', '2d'], board: ['Ac', 'Kd', '9s'], pot: 200, mevcut: 100 });
+  for (const tur of ['fold', 'call']) assert.equal(not(bahis, tur).onemli, true, tur);
+  assert.equal(not(bahis, 'raise', 300).onemli, true);
+  assert.equal(not(bahis, 'allin').onemli, true);
+});
+
 test('preflop yardımcıları: Chen puanı ve el bilgisi', () => {
   assert.equal(chenPuani(['As', 'Ad']), 20);
   assert.equal(chenPuani(['As', 'Ks']), 12);

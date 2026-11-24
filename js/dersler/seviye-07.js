@@ -49,9 +49,10 @@ export default {
   ],
   gorev: {
     tur: 'masa', botlar: ['pasifAcemi', 'gevsekAgresif'], baslangicCip: 1000, kucukBlind: 10, buyukBlind: 20,
-    desteModu: 'ayakkabi', elSayisi: 10, elSonuKartlariAc: true,
-    hedef: { tur: 'dogruKarar', miktar: 6 },
-    yildiz: [6, 8, 10],
+    desteModu: 'ayakkabi', elSayisi: 12, elSonuKartlariAc: true,
+    // Net = önemli 'iyi' − 'hata'. Ölçüm (200 tohumlu oturum, 12 el): pasifAcemi ort. 11,1; akilli ort. 13,0.
+    hedef: { tur: 'dogruKarar', miktar: 11 },
+    yildiz: [11, 12, 13],
     araSorular: { her: 2, tur: 'sonrakiKart' },
   },
   ozellikler: { koc: 'istege', saymaPaneli: true, outIpucu: true },

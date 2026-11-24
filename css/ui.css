@@ -141,6 +141,8 @@ a.dugme {
 .oturum__eylem { grid-area: eylem; min-width: 0; }
 .oturum__sayma { grid-area: sayma; min-width: 0; }
 .oturum__rakip { grid-area: rakip; min-width: 0; }
+/* Yan panel sarmalayıcısı: telefonda yok sayılır, çocukları doğrudan ızgaraya girer */
+.oturum__yan { display: contents; }
 .oturum__eylem {
   position: sticky;
   bottom: 0;
@@ -163,13 +165,35 @@ a.dugme {
   margin: var(--space-3) auto 0;
 }
 .out-ipucu {
+  position: relative;
   max-width: 440px;
   margin: var(--space-3) auto 0;
-  padding: var(--space-2) var(--space-3);
-  border-left: 3px solid var(--fosfor);
-  background: var(--paper-raised);
+  padding: var(--space-2) var(--space-3) var(--space-2) calc(var(--space-3) + 22px + var(--space-2));
+  border: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+  background: var(--accent-soft);
   border-radius: var(--radius-md);
   font-size: var(--t-sm);
+  line-height: 1.45;
+}
+/* Simge: koç balonundaki gibi küçük daire */
+.out-ipucu::before {
+  content: '#';
+  position: absolute;
+  left: var(--space-3);
+  top: calc(var(--space-2) + 0.1em);
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-soft);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+.out-ipucu[hidden] {
+  display: none;
 }
 .sayma__not {
   margin: var(--space-3) 0 0;
@@ -228,16 +252,30 @@ a.dugme {
   .oturum__ust {
     max-width: none;
   }
+  /* Masa + eylem solda, yan panel (koç / sayma / rakipler) sağda tek sütun halinde üstten akar */
   .oturum__alan {
     grid-template-columns: minmax(0, 1fr) 330px;
     grid-template-areas:
-      'masa koc'
-      'masa sayma'
-      'eylem sayma'
-      'eylem rakip';
-    grid-template-rows: auto auto auto 1fr;
+      'masa yan'
+      'eylem yan';
+    grid-template-rows: auto 1fr;
     column-gap: var(--space-5);
     align-items: start;
+  }
+  .oturum__yan {
+    grid-area: yan;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .oturum__yan > :empty {
+    display: none;
+  }
+  .oturum__masa,
+  .oturum__eylem {
+    width: 100%;
+    max-width: 760px;
+    justify-self: center;
   }
   .oturum__alan .koc,
   .oturum__alan .out-ipucu,
@@ -256,11 +294,99 @@ a.dugme {
     --k: 1;
     --kw-insan: 60px;
   }
+  /* Merkez biraz sıkı: alttaki insan koltuğunun eylem etiketi sokak etiketine değmesin */
+  .oturum__alan .masa__merkez {
+    top: calc(50% + 4px);
+    gap: 10px;
+  }
+  .oturum__alan .masa__sokak {
+    padding-block: 1px;
+    font-size: var(--t-md);
+  }
+  /* El sonu özeti tek satıra sığsın (iki satır olunca insan koltuğuna değiyordu) */
+  .oturum__alan .masa__sokak--sonuc {
+    max-width: none;
+    white-space: nowrap; /* merkez kutusu dar (board genişliği); taşan satır ortalı taşar */
+    padding-block: 4px;
+  }
+  /* Ad kutuları bu küçük masada telefon ölçüsünde: bahis fişleri ve rozetler kutuya değmesin */
+  .oturum__alan .koltuk__kimlik {
+    min-width: 84px;
+    max-width: 124px;
+    padding: 4px 10px 5px;
+  }
+  .oturum__alan .koltuk__ad { font-size: 14px; }
+  .oturum__alan .koltuk__cip { font-size: 13px; }
+  /* Bahis fişi kaymaları (--k: 1): fiş ad kutusunun dışında, pot/board'a değmeden */
+  .oturum__alan .masa[data-oyuncu-sayisi='2'] .koltuk[data-koltuk='1'],
+  .oturum__alan .masa[data-oyuncu-sayisi='4'] .koltuk[data-koltuk='2'],
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='3'] { --bx: 0; --by: 76; }
+  .oturum__alan .masa[data-oyuncu-sayisi='3'] .koltuk[data-koltuk='1'] { --bx: 0; --by: 80; }
+  .oturum__alan .masa[data-oyuncu-sayisi='3'] .koltuk[data-koltuk='2'] { --bx: 0; --by: 80; }
+  .oturum__alan .masa[data-oyuncu-sayisi='4'] .koltuk[data-koltuk='1'] { --bx: 80; --by: 0; }
+  .oturum__alan .masa[data-oyuncu-sayisi='4'] .koltuk[data-koltuk='3'] { --bx: -80; --by: 0; }
+  .oturum__alan .masa[data-oyuncu-sayisi='5'] .koltuk[data-koltuk='1'] { --bx: 80; --by: -14; }
+  .oturum__alan .masa[data-oyuncu-sayisi='5'] .koltuk[data-koltuk='2'] { --bx: -10; --by: 80; }
+  .oturum__alan .masa[data-oyuncu-sayisi='5'] .koltuk[data-koltuk='3'] { --bx: 10; --by: 80; }
+  .oturum__alan .masa[data-oyuncu-sayisi='5'] .koltuk[data-koltuk='4'] { --bx: -80; --by: -14; }
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='1'] { --bx: 84; --by: -30; }
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='2'] { --bx: 84; --by: 26; }
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='4'] { --bx: -84; --by: 26; }
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='5'] { --bx: -84; --by: -30; }
   .oturum__alan .masa[data-oyuncu-sayisi] {
     --kw-rakip: 42px;
   }
   .oturum__alan .masa__board .kart {
     --kw: 54px;
+  }
+  /* İnsanın bahis fişi sokak etiketinin üstüne binmesin: kartlarının soluna */
+  .oturum__alan .masa .koltuk[data-koltuk='0'] {
+    --bx: -122;
+    --by: -12;
+  }
+  /* D/SB/BB rozetleri ad kutusunun üstüne binmesin: plakanın yanında, dikey ortada */
+  .oturum__alan .koltuk__rozetler {
+    top: 50%;
+    right: auto;
+    left: calc(100% + 6px);
+    transform: translateY(-50%);
+  }
+  .oturum__alan .masa[data-oyuncu-sayisi='3'] .koltuk[data-koltuk='2'] .koltuk__rozetler,
+  .oturum__alan .masa[data-oyuncu-sayisi='4'] .koltuk[data-koltuk='3'] .koltuk__rozetler,
+  .oturum__alan .masa[data-oyuncu-sayisi='5'] .koltuk[data-koltuk='3'] .koltuk__rozetler,
+  .oturum__alan .masa[data-oyuncu-sayisi='5'] .koltuk[data-koltuk='4'] .koltuk__rozetler,
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='4'] .koltuk__rozetler,
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='5'] .koltuk__rozetler {
+    left: auto;
+    right: calc(100% + 6px);
+  }
+}
+
+/* Fold eden oyuncunun ad kutusu soluk kartlarının üstünde okunur kalsın: plaka opak, yazı soluk */
+.koltuk--fold .koltuk__kimlik {
+  opacity: 1;
+  background: #161b3a;
+  color: var(--kece-yazi-soluk);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+.koltuk--fold .koltuk__cip {
+  color: var(--kece-yazi-soluk);
+}
+.koltuk--fold.koltuk[data-koltuk='0'] .koltuk__kimlik {
+  background: #d6d3cb;
+  color: #3a3d47;
+}
+
+/* "Deste karıldı" bildirimi: ekranın üstünde, koç balonunu ve eylem çubuğunu örtmesin */
+.bildirim {
+  top: calc(var(--space-3) + env(safe-area-inset-top));
+  bottom: auto;
+  animation-name: bildirim-ustten;
+}
+@keyframes bildirim-ustten {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -12px);
   }
 }
 
@@ -301,4 +427,12 @@ a.dugme {
 /* Programla odaklanan başlıklar (ekran değişiminde) halka göstermesin */
 [tabindex='-1']:focus {
   outline: none;
+}
+
+/* 1040–1099px: içerik daha dar; yan sütunu daraltıp masayı ~700px tut (bahis kaymaları px cinsinden) */
+@media (min-width: 1040px) and (max-width: 1099px) {
+  .oturum__alan {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    column-gap: var(--space-4);
+  }
 }

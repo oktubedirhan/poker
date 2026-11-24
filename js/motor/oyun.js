@@ -66,7 +66,7 @@ export class Oyun {
     this.elSonuKartlariAc = elSonuKartlariAc;
     this.blindArtis = blindArtis;
     this.deste = new Deste({ mod: desteModu, rng });
-    this._bilinenKaristirma = 0;
+    this._bilinenKaristirma = this.deste.karistirmaSayisi; // kurulumdaki ilk karma bildirilmez
 
     this.elNo = 0;
     this.sokak = 'bitti';
@@ -199,7 +199,9 @@ export class Oyun {
     }
 
     p.konustu = true;
-    p.actigiSeviye = this.tamBahisSeviyesi;
+    // Bahissiz check: oyuncu henüz bir bahse yanıt vermedi. Sonradan gelen (tam olmayan all-in
+    // dahil) her açılış bahsine karşı raise hakkı kalır; -1 her tamBahisSeviyesi'nden küçüktür.
+    p.actigiSeviye = tur === 'check' && this.mevcutBahis === 0 ? -1 : this.tamBahisSeviyesi;
     // Olayın kendi 'tur' alanı 'eylem' olduğu için eylem türü 'eylem' alanında taşınır.
     // miktar: oyuncunun bu sokaktaki toplam bahsi, eklenen: bu eylemle ortaya koyduğu.
     this._olay({ tur: 'eylem', oyuncuId, eylem: tur, miktar: p.bahis, eklenen: p.bahis - oncekiBahis });
@@ -526,7 +528,7 @@ export class Oyun {
   }
 
   // Açılma sırası: son agresif oyuncu önce, yoksa dealer'ın solundaki ilk oyuncu; sonra saat yönünde.
-  // Herkes all-in ise tüm eller açılır. Değilse bir oyuncu, hak sahibi olduğu çekişmeli potların
+  // Herkes all-in ise ya da en az bir oyuncu all-in ise tüm eller açılır. Değilse bir oyuncu, hak sahibi olduğu çekişmeli potların
   // hiçbirinde açılmış en iyi eli yenemiyor/eşitleyemiyorsa elini açmaz (muck).
   _showdown() {
     this.sokak = 'showdown';
@@ -542,12 +544,14 @@ export class Oyun {
       if (p.eldeMi && !p.dusuk) sira.push(p);
     }
 
+    // En az bir oyuncu all-in ise (ya da board kendiliğinden açıldıysa) kimse muck etmez.
+    const herkesAcar = this._otomatik || sira.some((p) => p.allIn);
     const enIyiAcilan = new Map(); // potIndex → deger
     const acilanlar = [];
     for (const p of sira) {
       const deger = degerlendir([...p.kartlar, ...this.board]);
       const potIndeksleri = potlar.map((pot, i) => (pot.hakSahipleri.includes(p.id) ? i : -1)).filter((i) => i >= 0);
-      const acar = this._otomatik || potIndeksleri.some((i) => !enIyiAcilan.has(i) || karsilastir(deger, enIyiAcilan.get(i)) >= 0);
+      const acar = herkesAcar || potIndeksleri.some((i) => !enIyiAcilan.has(i) || karsilastir(deger, enIyiAcilan.get(i)) >= 0);
       if (!acar) continue;
       for (const i of potIndeksleri) {
         if (!enIyiAcilan.has(i) || karsilastir(deger, enIyiAcilan.get(i)) > 0) enIyiAcilan.set(i, deger);

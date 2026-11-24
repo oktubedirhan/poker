@@ -180,6 +180,59 @@ test('tam olmayan all-in raise aksiyonu yeniden açmaz; tam raise açar', () => 
   assert.deepEqual(oyun2.gecerliEylemler('p1').raise, { min: 340, max: 990 });
 });
 
+test('tam olmayan all-in açılış bahsi: check etmiş oyuncu raise edebilir, bahse yanıt vermiş edemez', () => {
+  // Flop sırası: SB (p1), BB (p2), BTN (p0)
+  const kur = () => {
+    const o = oyunKur([1000, 1000, 16]);
+    o.yeniEl();
+    o.eylem('p0', { tur: 'call' });
+    o.eylem('p1', { tur: 'call' });
+    o.eylem('p2', { tur: 'check' }); // p2: 6 fiş kaldı
+    o.eylem('p1', { tur: 'check' });
+    o.eylem('p2', { tur: 'allin' }); // 6 < BB 10 → tam olmayan açılış bahsi
+    return o;
+  };
+  const o = kur();
+  assert.equal(o.gorunum('p0').mevcutBahis, 6);
+  // p0 henüz konuşmadı: raise hakkı var
+  assert.deepEqual(o.gecerliEylemler('p0').raise, { min: 16, max: 990 });
+  o.eylem('p0', { tur: 'call' });
+  // p1 check etmişti, bahse yanıt vermedi: raise edebilir (en az tam raise'e tamamlayarak)
+  const g1 = o.gecerliEylemler('p1');
+  assert.deepEqual(g1.raise, { min: 16, max: 990 });
+  assert.equal(g1.allin, 990);
+  o.eylem('p1', { tur: 'raise', miktar: 16 }); // artış 10 → tam raise, p0 yeniden açılır
+  assert.deepEqual(o.gecerliEylemler('p0').raise, { min: 26, max: 990 });
+
+  // p1 bahse yanıt verdiyse (call), tam olmayan all-in yeniden açmaz
+  const o2 = oyunKur([1000, 1000, 116]);
+  o2.yeniEl();
+  o2.eylem('p0', { tur: 'call' });
+  o2.eylem('p1', { tur: 'call' });
+  o2.eylem('p2', { tur: 'check' }); // p2: 106
+  o2.eylem('p1', { tur: 'bet', miktar: 100 });
+  o2.eylem('p2', { tur: 'allin' }); // 106: artış 6 < 100
+  o2.eylem('p0', { tur: 'call' });
+  assert.equal(o2.gecerliEylemler('p1').raise, null);
+  assert.equal(o2.gecerliEylemler('p1').allin, 6);
+});
+
+test('showdown: river bet + all-in call sonrası tüm eller açılır (muck yok)', () => {
+  const oyun = oyunKur([1000, 1000, 100]);
+  oyun.yeniEl({ hazirKartlar: { p0: ['Ah', 'Ad'], p1: ['4c', '5d'], p2: ['Kh', 'Kd'], board: ['2c', '7d', '9h', 'Js', '3s'] } });
+  oyun.eylem('p0', { tur: 'call' });
+  oyun.eylem('p1', { tur: 'fold' });
+  oyun.eylem('p2', { tur: 'check' });
+  for (let i = 0; i < 4; i++) oyun.eylem(oyun.siradaki(), { tur: 'check' }); // flop, turn
+  oyun.eylem('p2', { tur: 'check' });
+  oyun.eylem('p0', { tur: 'bet', miktar: 500 });
+  const olaylar = oyun.eylem('p2', { tur: 'allin' }); // 90: call için yetmez, all-in call
+  const sd = olaylar.find((o) => o.tur === 'showdown');
+  // p0 son agresif, önce açar; p2 kaybediyor ama all-in olduğu için o da açar
+  assert.deepEqual(sd.acilanlar.map((a) => a.oyuncuId), ['p0', 'p2']);
+  assert.deepEqual(oyun.gorunum('p0').oyuncular[2].acikKartlar, ['Kh', 'Kd']);
+});
+
 test('tek kişi kalınca el biter, kart açılmaz', () => {
   const oyun = oyunKur([1000, 1000, 1000]);
   oyun.yeniEl();
@@ -325,7 +378,8 @@ test('elSonuKartlariAc: fold ile biten elde bile tüm eller açılır', () => {
 test('ayakkabı modu: eller arası kartlar desteye dönmez, karildi yalnız karınca', () => {
   const oyun = oyunKur([1000, 1000], { desteModu: 'ayakkabi' });
   const ilk = oyun.yeniEl();
-  assert.deepEqual(ilk.find((o) => o.tur === 'karildi'), { tur: 'karildi', mod: 'ayakkabi' });
+  // Kurulumdaki ilk karma bildirilmez: ilk elde "Deste karıldı" çıkmaz
+  assert.ok(!turler(ilk).includes('karildi'));
   const el1 = oyun.durum().deste.cekilenler;
   oyun.eylem('p0', { tur: 'fold' });
   const ikinci = oyun.yeniEl();

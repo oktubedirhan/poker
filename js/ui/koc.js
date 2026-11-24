@@ -17,7 +17,7 @@ export function kocBalonu({ not = 'ipucu', baslik, mesaj, ayrinti, ekler } = {},
     govde.append(el('dl', { class: 'koc__ayrinti' }, satirlar.map(([dt, dd]) => el('div', {}, el('dt', { text: dt }), el('dd', { text: dd })))));
   }
   if (ekler) govde.append(ekler);
-  const kutu = el('aside', { class: 'koc koc--giris', role: 'status' },
+  const kutu = el('aside', { class: 'koc koc--giris' }, // duyur() okur; role=status çift okuma yapardı
     el('span', { class: 'koc__simge', 'aria-hidden': 'true' }),
     govde,
     el('button', { class: 'ikon-dugme koc__kapat', type: 'button', 'aria-label': 'Notu kapat', text: '✕', onclick: () => { kutu.remove(); onKapat?.(); } }),
