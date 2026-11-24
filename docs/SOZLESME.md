@@ -227,3 +227,15 @@ Kart DOM: `<div class="kart" data-kart="Ah" data-renk="h"></div>`; arka yüz `<d
 
 ## Test
 `npm test` → `node --test "tests/**/*.test.mjs"`. Her modülün kendi `tests/<modul>.test.mjs` dosyası. Rastgelelik testlerde `tohumluRng` ile.
+
+## Ek kararlar (şef, dalga 1 sonrası)
+- `hedef.miktar`: `cipKazan` → başlangıca göre net fiş kazancı; `dogruKarar` → koçun 'iyi' notu verdiği karar sayısı; `hayattaKal` → elSayisi kadar el sonunda elenmemiş olmak; `birinciOl` → `yildiz: [3,2,1]` = bitirilen en kötü sıra (1. → 3 yıldız …).
+- `yildiz` eşikleri hedefle aynı birimde (artan: 1, 2, 3 yıldız için gereken değer); birinciOl istisnadır.
+- `araSorular.her`: **el** sayısı (her n elin sonunda bir soru).
+- `potOrani` sorusunda `pot` rakip bahsi dahil mevcut pot, `call` eklenecek miktar; gereken equity = call/(pot+call).
+- `yonlendirmeliEl` adımlarında `beklenen` yoksa koç yalnızca metni gösterir, eylemi zorlamaz.
+- (Motor A) `eylem` olayı: `{ tur:'eylem', oyuncuId, eylem:'fold'|'check'|'call'|'bet'|'raise'|'allin', miktar, eklenen }` — eylem türü `eylem` alanında; `miktar` = oyuncunun o sokaktaki toplam bahsi.
+- (Motor A) El bitince `sokak` = 'bitti'; showdown'a gidildiği `gecmis`teki `showdown` olayından anlaşılır.
+- (Motor A) Board otomatik açılması: konuşabilecek ≤1 oyuncu kalıp diğerleri all-in ise. Herkes fold edince board açılmaz.
+- (Motor A) Ekler: `gorunum.kucukBlind/buyukBlind`, `Deste.yakilanlar()`, `puanHesapla(kartlar)` (degerlendirici.js; equity döngüleri için hızlı yol), `hazirKartlar.insan` → `'sen'`.
+- (Motor A) Kaybeden showdown'da muck eder (kartı açılmaz); herkes all-in ise tüm eller açılır.
