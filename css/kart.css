@@ -1,0 +1,256 @@
+/* Poker Okulu · kartlar
+   Tamamen CSS: JS yalnızca <div class="kart" data-kart="Ah" data-renk="h"></div> yazar.
+   Değer ve renk sembolü, data-kart özniteliğinden attribute-selector ile çıkarılır
+   (CSS bir metnin ilk harfini alamaz; 13 + 4 kural bunu çözer). Ek span gerekmez.
+   Ölçek: kartın genişliği --kw; her iç ölçü em (1em = kart genişliği), kart istenen boyda yeniden ölçeklenir. */
+
+/* ---------- Değer ve renk haritası (kart, mini kart, sayma hücresi: her [data-kart]) ---------- */
+[data-kart^='2'] { --deger: '2'; }
+[data-kart^='3'] { --deger: '3'; }
+[data-kart^='4'] { --deger: '4'; }
+[data-kart^='5'] { --deger: '5'; }
+[data-kart^='6'] { --deger: '6'; }
+[data-kart^='7'] { --deger: '7'; }
+[data-kart^='8'] { --deger: '8'; }
+[data-kart^='9'] { --deger: '9'; }
+[data-kart^='T'] { --deger: '10'; }
+[data-kart^='J'] { --deger: 'J'; }
+[data-kart^='Q'] { --deger: 'Q'; }
+[data-kart^='K'] { --deger: 'K'; }
+[data-kart^='A'] { --deger: 'A'; }
+
+/* \FE0E: sembolün emoji değil metin biçiminde çizilmesini zorlar (iOS) */
+[data-kart$='s'], [data-renk='s'] { --sembol: '♠\FE0E'; --renk: var(--kart-siyah); }
+[data-kart$='h'], [data-renk='h'] { --sembol: '♥\FE0E'; --renk: var(--kart-kirmizi); }
+[data-kart$='d'], [data-renk='d'] { --sembol: '♦\FE0E'; --renk: var(--kart-kirmizi); }
+[data-kart$='c'], [data-renk='c'] { --sembol: '♣\FE0E'; --renk: var(--kart-siyah); }
+
+/* Renk körleri için dört renk: .dort-renk herhangi bir üst öğeye (örn. <html> ya da .uygulama) konur */
+.dort-renk [data-kart$='d'], .dort-renk [data-renk='d'] { --renk: var(--kart-karo); }
+.dort-renk [data-kart$='c'], .dort-renk [data-renk='c'] { --renk: var(--kart-sinek); }
+
+/* ---------- Kart yüzü ---------- */
+.kart {
+  position: relative;
+  flex: none;
+  display: block;
+  width: var(--kw, 64px);
+  height: calc(var(--kw, 64px) * 1.4);
+  font-size: var(--kw, 64px);
+  border-radius: 0.08em;
+  background: linear-gradient(160deg, var(--kart-yuz-1), var(--kart-yuz-2));
+  color: var(--renk, var(--kart-siyah));
+  box-shadow: 0 0 0 0.012em rgba(25, 28, 36, 0.22), 0 0.05em 0.1em rgba(0, 0, 0, 0.3);
+  font-family: var(--font-display);
+  line-height: 1;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.18s var(--ease), box-shadow 0.18s, opacity 0.25s, filter 0.25s;
+}
+
+/* Köşe göstergesi: değer üstte, renk altta (iri gösterge: örtüşen kartlarda da okunur) */
+.kart::before {
+  content: var(--deger) '\A' var(--sembol);
+  white-space: pre;
+  position: absolute;
+  top: 0.06em;
+  left: 0.04em;
+  width: 0.36em;
+  text-align: center;
+  font-size: 0.3em;
+  font-weight: 600;
+  font-variation-settings: 'opsz' 48;
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  font-family: var(--font-display);
+}
+
+/* Orta: büyük renk sembolü, sağ altta (gösterge soldaki şeritte kalır) */
+.kart::after {
+  content: var(--sembol);
+  position: absolute;
+  inset: 0.34em 0.06em 0.06em 0.34em;
+  display: grid;
+  place-items: center;
+  font-size: 0.5em;
+  line-height: 1;
+  font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols 2', system-ui, sans-serif;
+}
+.kart[data-kart^='A']::after {
+  font-size: 0.78em;
+}
+/* Resimli kartlar: çerçeveli büyük harf */
+.kart[data-kart^='J']::after,
+.kart[data-kart^='Q']::after,
+.kart[data-kart^='K']::after {
+  content: var(--deger);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variation-settings: 'opsz' 144;
+  font-size: 0.62em;
+  inset: 0.34em 0.07em 0.07em 0.4em;
+  border: 0.016em solid currentColor;
+  border-radius: 0.045em;
+  background: repeating-linear-gradient(
+    45deg,
+    color-mix(in oklab, currentColor 9%, transparent) 0 0.028em,
+    transparent 0.028em 0.065em
+  );
+}
+
+/* ---------- Arka yüz ---------- */
+.kart--arka {
+  background:
+    repeating-linear-gradient(45deg, transparent 0 0.045em, rgba(255, 255, 255, 0.13) 0.045em 0.056em),
+    repeating-linear-gradient(-45deg, transparent 0 0.045em, rgba(255, 255, 255, 0.13) 0.045em 0.056em),
+    linear-gradient(160deg, var(--kart-arka-2), var(--kart-arka));
+  border: 0.05em solid var(--kart-yuz-1);
+}
+.kart--arka::before {
+  content: '';
+  position: absolute;
+  inset: 0.025em;
+  width: auto;
+  border: 0.012em solid rgba(246, 216, 115, 0.6);
+  border-radius: 0.04em;
+}
+.kart--arka::after {
+  content: '♠\FE0E';
+  inset: 0;
+  color: var(--altin);
+  opacity: 0.55;
+  font-size: 0.34em;
+  border: 0;
+  background: none;
+}
+
+/* ---------- Boş yuva (board'da henüz açılmamış kart, boş el) ---------- */
+.kart--yuva {
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: none;
+  border: 0.02em dashed var(--yuva-cizgi, rgba(255, 255, 255, 0.34));
+}
+.kart--yuva::before,
+.kart--yuva::after {
+  content: none;
+}
+.kart--yuva[data-etiket]::after {
+  content: attr(data-etiket);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 500 0.15em var(--font-sans);
+  color: var(--kece-yazi-soluk);
+  border: 0;
+  background: none;
+}
+/* Kâğıt zemin üstünde (ders, sorular) */
+.kagit-uzeri .kart--yuva,
+.panel .kart--yuva {
+  --yuva-cizgi: var(--ink-muted);
+  background: transparent;
+}
+
+/* ---------- Boyutlar (isteğe bağlı; --kw doğrudan da verilebilir) ---------- */
+.kart--mini { --kw: 28px; }
+.kart--kucuk { --kw: 44px; }
+.kart--orta { --kw: 64px; }
+.kart--buyuk { --kw: 88px; }
+
+/* ---------- Durumlar ---------- */
+.kart--secilebilir {
+  cursor: pointer;
+}
+.kart--secilebilir:hover {
+  transform: translateY(-0.06em);
+}
+.kart--secili {
+  transform: translateY(-0.12em);
+  box-shadow:
+    0 0 0 0.04em var(--secim, var(--accent)),
+    0 0.1em 0.16em rgba(0, 0, 0, 0.3);
+}
+/* Kazanan 5 kart */
+.kart--vurgulu {
+  transform: translateY(-0.06em);
+  box-shadow:
+    0 0 0 0.032em var(--altin),
+    0 0 0 0.07em rgba(246, 216, 115, 0.4),
+    0 0.06em 0.12em rgba(0, 0, 0, 0.3);
+}
+/* Görülen (sayma antrenmanında geçmiş el) ya da kazanana katkısı olmayan kart */
+.kart--soluk {
+  opacity: 0.4;
+  filter: saturate(0.5);
+}
+
+/* ---------- Kart sıraları ---------- */
+.kart-sirasi {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+.kart-sirasi--ortusen > .kart + .kart {
+  margin-left: calc(var(--kw, 64px) * -0.34);
+}
+.kart-sirasi--ortusen .kart--secili,
+.kart-sirasi--ortusen .kart--vurgulu {
+  z-index: 1;
+}
+.kart-sirasi--sarmal {
+  flex-wrap: wrap;
+}
+
+/* ---------- Animasyonlar ----------
+   Dağıtım: kart, --dx / --dy konumundan (varsayılan masanın üst ortası) yerine uçar; --gecikme ile sıralanır. */
+.kart--dagit {
+  animation: kart-dagit 0.42s var(--ease) both;
+  animation-delay: var(--gecikme, 0ms);
+}
+@keyframes kart-dagit {
+  from {
+    transform: translate(var(--dx, 0), var(--dy, -9em)) rotate(-18deg) scale(0.7);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  to {
+    transform: none;
+  }
+}
+/* Çevirme: arka yüzden açık yüze geçerken JS sınıfı değiştirir ve .kart--cevir ekler */
+.kart--cevir {
+  animation: kart-cevir 0.45s var(--ease) both;
+  animation-delay: var(--gecikme, 0ms);
+}
+@keyframes kart-cevir {
+  from {
+    transform: perspective(40em) rotateY(90deg);
+  }
+  to {
+    transform: perspective(40em) rotateY(0);
+  }
+}
+/* Atma (fold): kartlar masaya doğru kayıp söner */
+.kart--at {
+  animation: kart-at 0.4s ease-in both;
+}
+@keyframes kart-at {
+  to {
+    transform: translateY(-1.2em) rotate(14deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kart--dagit,
+  .kart--cevir,
+  .kart--at {
+    animation: none;
+  }
+  .kart--at {
+    opacity: 0;
+  }
+}

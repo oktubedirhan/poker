@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Poker Okulu</title>
+  <meta name="description" content="Hiç poker bilmeyenlere Texas Hold'em'i seviye seviye öğreten, gerçek desteyle ve açıklayan koçla oynanan uygulama.">
+  <meta name="theme-color" content="#f5f3ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#12141a" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Poker Okulu">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="./css/fonts.css">
+  <link rel="stylesheet" href="./css/temel.css">
+  <link rel="stylesheet" href="./css/kart.css">
+  <link rel="stylesheet" href="./css/masa.css">
+  <link rel="stylesheet" href="./css/kontroller.css">
+</head>
+<body>
+  <!-- Arayüz (js/ui) her şeyi #uygulama içine çizer. İçindeki .acilis, JS yüklenene kadar görünür. -->
+  <div class="uygulama">
+    <header class="ust">
+      <a class="marka" href="./" aria-label="Poker Okulu, ana sayfa">
+        <span class="marka__isaret" aria-hidden="true">♠</span>
+        <span>
+          <span class="marka__ad">Poker Okulu</span>
+          <span class="marka__alt" style="display:block">Texas Hold'em'i sıfırdan öğren</span>
+        </span>
+      </a>
+      <div class="ust__araclar" id="ust-araclar"></div>
+    </header>
+
+    <main id="uygulama">
+      <div class="acilis" role="status">
+        <div class="acilis__kartlar" aria-hidden="true">
+          <div class="kart kart--buyuk" data-kart="As" data-renk="s"></div>
+          <div class="kart kart--buyuk" data-kart="Ah" data-renk="h"></div>
+        </div>
+        <p>Deste karılıyor…</p>
+      </div>
+      <noscript>
+        <p class="panel">Poker Okulu'nu kullanmak için tarayıcınızda JavaScript açık olmalı.</p>
+      </noscript>
+    </main>
+  </div>
+
+  <script type="module" src="./js/ui/uygulama.js"></script>
+  <!-- Çevrimdışı çalışma: yalnızca bu kapsamdaki sw.js, yalnızca poker-* önbellekleri -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

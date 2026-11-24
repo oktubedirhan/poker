@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Poker Okulu · bileşen vitrini</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="./css/fonts.css">
+  <link rel="stylesheet" href="./css/temel.css">
+  <link rel="stylesheet" href="./css/kart.css">
+  <link rel="stylesheet" href="./css/masa.css">
+  <link rel="stylesheet" href="./css/kontroller.css">
+  <style>
+    /* Yalnızca vitrin sayfasının düzeni */
+    .vitrin h2.bolum { font-size: var(--t-xl); margin: var(--space-7) 0 var(--space-2); padding-bottom: var(--space-2); border-bottom: 1px dashed var(--rule); }
+    .vitrin .not { color: var(--ink-muted); font-size: var(--t-sm); margin-bottom: var(--space-4); max-width: 44rem; }
+    .vitrin .arac { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4); }
+    .vitrin .satir { display: flex; gap: var(--space-5); flex-wrap: wrap; align-items: flex-start; }
+    .vitrin .tek { display: grid; gap: 6px; justify-items: center; font-size: var(--t-xs); color: var(--ink-muted); }
+    .vitrin .keceli { padding: var(--space-4); border-radius: var(--radius-lg); }
+    .vitrin .modal-onizleme { position: relative; display: grid; place-items: center; padding: var(--space-5) var(--space-4); border-radius: var(--radius-lg); background: var(--paper-sunk); }
+    .vitrin .modal-onizleme .modal__kutu { animation: none; }
+    .vitrin .iki { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: start; }
+  </style>
+</head>
+<body>
+<div class="uygulama vitrin">
+  <header class="ust">
+    <div class="marka">
+      <span class="marka__isaret" aria-hidden="true">♠</span>
+      <span><span class="marka__ad">Poker Okulu</span><span class="marka__alt" style="display:block">Bileşen vitrini (statik)</span></span>
+    </div>
+    <div class="ust__araclar">
+      <button class="ikon-dugme" id="tema" type="button" aria-label="Tema değiştir">◐</button>
+    </div>
+  </header>
+  <div class="arac">
+    <label class="anahtar"><input type="checkbox" id="dort"><span class="anahtar__ray"></span>Dört renk (renk körleri için)</label>
+  </div>
+
+  <h2 class="bolum" id="b1">Kartlar</h2>
+  <p class="not">52 kartın hepsi yalnızca <code>data-kart</code> ile çizilir. Değer ve sembol CSS'ten gelir.</p>
+  <div class="kece" style="display:grid;gap:10px;justify-items:center"><div class="kart-sirasi kart-sirasi--sarmal" style="--kw:46px"><div class="kart" data-kart="2s" data-renk="s"></div><div class="kart" data-kart="3s" data-renk="s"></div><div class="kart" data-kart="4s" data-renk="s"></div><div class="kart" data-kart="5s" data-renk="s"></div><div class="kart" data-kart="6s" data-renk="s"></div><div class="kart" data-kart="7s" data-renk="s"></div><div class="kart" data-kart="8s" data-renk="s"></div><div class="kart" data-kart="9s" data-renk="s"></div><div class="kart" data-kart="Ts" data-renk="s"></div><div class="kart" data-kart="Js" data-renk="s"></div><div class="kart" data-kart="Qs" data-renk="s"></div><div class="kart" data-kart="Ks" data-renk="s"></div><div class="kart" data-kart="As" data-renk="s"></div></div><div class="kart-sirasi kart-sirasi--sarmal" style="--kw:46px"><div class="kart" data-kart="2h" data-renk="h"></div><div class="kart" data-kart="3h" data-renk="h"></div><div class="kart" data-kart="4h" data-renk="h"></div><div class="kart" data-kart="5h" data-renk="h"></div><div class="kart" data-kart="6h" data-renk="h"></div><div class="kart" data-kart="7h" data-renk="h"></div><div class="kart" data-kart="8h" data-renk="h"></div><div class="kart" data-kart="9h" data-renk="h"></div><div class="kart" data-kart="Th" data-renk="h"></div><div class="kart" data-kart="Jh" data-renk="h"></div><div class="kart" data-kart="Qh" data-renk="h"></div><div class="kart" data-kart="Kh" data-renk="h"></div><div class="kart" data-kart="Ah" data-renk="h"></div></div><div class="kart-sirasi kart-sirasi--sarmal" style="--kw:46px"><div class="kart" data-kart="2d" data-renk="d"></div><div class="kart" data-kart="3d" data-renk="d"></div><div class="kart" data-kart="4d" data-renk="d"></div><div class="kart" data-kart="5d" data-renk="d"></div><div class="kart" data-kart="6d" data-renk="d"></div><div class="kart" data-kart="7d" data-renk="d"></div><div class="kart" data-kart="8d" data-renk="d"></div><div class="kart" data-kart="9d" data-renk="d"></div><div class="kart" data-kart="Td" data-renk="d"></div><div class="kart" data-kart="Jd" data-renk="d"></div><div class="kart" data-kart="Qd" data-renk="d"></div><div class="kart" data-kart="Kd" data-renk="d"></div><div class="kart" data-kart="Ad" data-renk="d"></div></div><div class="kart-sirasi kart-sirasi--sarmal" style="--kw:46px"><div class="kart" data-kart="2c" data-renk="c"></div><div class="kart" data-kart="3c" data-renk="c"></div><div class="kart" data-kart="4c" data-renk="c"></div><div class="kart" data-kart="5c" data-renk="c"></div><div class="kart" data-kart="6c" data-renk="c"></div><div class="kart" data-kart="7c" data-renk="c"></div><div class="kart" data-kart="8c" data-renk="c"></div><div class="kart" data-kart="9c" data-renk="c"></div><div class="kart" data-kart="Tc" data-renk="c"></div><div class="kart" data-kart="Jc" data-renk="c"></div><div class="kart" data-kart="Qc" data-renk="c"></div><div class="kart" data-kart="Kc" data-renk="c"></div><div class="kart" data-kart="Ac" data-renk="c"></div></div></div>
+
+  <h2 class="bolum" id="b2">Kart halleri</h2>
+  <div class="kece satir" style="align-items:flex-end">
+    <div class="tek" style="color:var(--kece-yazi-soluk)"><div class="kart kart--buyuk" data-kart="Ah" data-renk="h"></div>açık yüz</div>
+    <div class="tek" style="color:var(--kece-yazi-soluk)"><div class="kart kart--arka kart--buyuk"></div>arka yüz</div>
+    <div class="tek" style="color:var(--kece-yazi-soluk)"><div class="kart kart--yuva kart--buyuk" data-etiket="board"></div>boş yuva</div>
+    <div class="tek" style="color:var(--kece-yazi-soluk)"><div class="kart kart--buyuk kart--secili kart--secilebilir" data-kart="Qs" data-renk="s"></div>seçili</div>
+    <div class="tek" style="color:var(--kece-yazi-soluk)"><div class="kart kart--buyuk kart--vurgulu" data-kart="Td" data-renk="d"></div>vurgulu (kazanan)</div>
+    <div class="tek" style="color:var(--kece-yazi-soluk)"><div class="kart kart--buyuk kart--soluk" data-kart="7c" data-renk="c"></div>soluk (görülen)</div>
+    <div class="tek" style="color:var(--kece-yazi-soluk)"><div class="kart-sirasi kart-sirasi--ortusen" style="--kw:64px"><div class="kart" data-kart="Ks" data-renk="s"></div><div class="kart" data-kart="Kh" data-renk="h"></div><div class="kart" data-kart="Kd" data-renk="d"></div><div class="kart" data-kart="Kc" data-renk="c"></div></div>örtüşen sıra</div>
+  </div>
+  <p class="not" style="margin-top:var(--space-3)">Boyutlar: <code>kart--mini</code> 28, <code>kart--kucuk</code> 44, <code>kart--orta</code> 64, <code>kart--buyuk</code> 88 piksel; ya da doğrudan <code>--kw</code>.</p>
+
+  <h2 class="bolum" id="b3">Masa: 6 kişi, flop, sıra Zeynep'te</h2>
+  <p class="not">Sen altta. Elif fold etti, Can all-in, Zeynep dealer ve sırada, Deniz büyük blind.</p>
+  
+  <section class="masa" data-oyuncu-sayisi="6" aria-label="6 kişilik masa">
+    <div class="masa__merkez">
+      <div class="masa__pot"><span class="cip-yigin" data-adet="4" data-deger="25"></span>Pot <b>140</b></div>
+      <div class="masa__board"><div class="kart" data-kart="Kh" data-renk="h"></div><div class="kart" data-kart="7d" data-renk="d"></div><div class="kart" data-kart="2s" data-renk="s"></div><div class="kart kart--yuva"></div><div class="kart kart--yuva"></div></div>
+      <p class="masa__sokak">Flop</p>
+    </div>
+    <div class="koltuk koltuk--insan" data-koltuk="0">
+      <span class="koltuk__eylem"></span>
+      <div class="koltuk__kartlar"><div class="kart" data-kart="Ah" data-renk="h"></div><div class="kart" data-kart="Kd" data-renk="d"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Sen</span><span class="koltuk__cip">960</span><span class="koltuk__rozetler"><span class="rozet rozet--sb" title="SB">SB</span></span></div>
+      
+    </div>
+    <div class="koltuk koltuk--fold" data-koltuk="1">
+      <span class="koltuk__eylem koltuk__eylem--fold">Fold</span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Elif</span><span class="koltuk__cip">1.020</span></div>
+      
+    </div>
+    <div class="koltuk" data-koltuk="2">
+      <span class="koltuk__eylem">Check</span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Mert</span><span class="koltuk__cip">890</span></div>
+      
+    </div>
+    <div class="koltuk koltuk--sirada" data-koltuk="3">
+      <span class="koltuk__eylem"></span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Zeynep</span><span class="koltuk__cip">1.100</span><span class="koltuk__rozetler"><span class="rozet rozet--dealer" title="dealer">D</span></span></div>
+      <span class="koltuk__bahis"><span class="cip-yigin" data-adet="2" data-deger="25"></span>40</span>
+    </div>
+    <div class="koltuk koltuk--allin" data-koltuk="4">
+      <span class="koltuk__eylem koltuk__eylem--agresif">All-in</span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Can</span><span class="koltuk__cip">0</span></div>
+      <span class="koltuk__bahis"><span class="cip-yigin" data-adet="3" data-deger="100"></span>300</span>
+    </div>
+    <div class="koltuk" data-koltuk="5">
+      <span class="koltuk__eylem"></span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Deniz</span><span class="koltuk__cip">1.340</span><span class="koltuk__rozetler"><span class="rozet rozet--bb" title="BB">BB</span></span></div>
+      <span class="koltuk__bahis"><span class="cip-yigin" data-adet="1" data-deger="5"></span>20</span>
+    </div>
+  </section>
+
+  <h2 class="bolum" id="b4">Masa: 4 kişi, showdown, kazanan vurgusu</h2>
+  
+  <section class="masa" data-oyuncu-sayisi="4" aria-label="4 kişilik masa">
+    <div class="masa__merkez">
+      <div class="masa__pot"><span class="cip-yigin" data-adet="5" data-deger="100"></span>Pot <b>520</b></div>
+      <div class="masa__board"><div class="kart kart--vurgulu" data-kart="Kh" data-renk="h"></div><div class="kart kart--vurgulu" data-kart="Kc" data-renk="c"></div><div class="kart kart--soluk" data-kart="7d" data-renk="d"></div><div class="kart kart--vurgulu" data-kart="Ks" data-renk="s"></div><div class="kart kart--soluk" data-kart="2s" data-renk="s"></div></div>
+      <p class="masa__sokak masa__sokak--sonuc">Mert kazandı +520</p>
+    </div>
+    <div class="koltuk koltuk--insan" data-koltuk="0">
+      <span class="koltuk__eylem">Floş değil</span>
+      <div class="koltuk__kartlar"><div class="kart" data-kart="Ah" data-renk="h"></div><div class="kart" data-kart="Qd" data-renk="d"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Sen</span><span class="koltuk__cip">480</span></div>
+      
+    </div>
+    <div class="koltuk koltuk--fold" data-koltuk="1">
+      <span class="koltuk__eylem koltuk__eylem--fold">Fold</span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Elif</span><span class="koltuk__cip">1.020</span></div>
+      
+    </div>
+    <div class="koltuk koltuk--kazanan" data-koltuk="2">
+      <span class="koltuk__eylem koltuk__eylem--el">Dörtlü (Kare)</span>
+      <div class="koltuk__kartlar"><div class="kart" data-kart="Kd" data-renk="d"></div><div class="kart" data-kart="9h" data-renk="h"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Mert</span><span class="koltuk__cip">1.410</span></div>
+      
+    </div>
+    <div class="koltuk koltuk--elendi" data-koltuk="3">
+      <span class="koltuk__eylem"></span>
+      <div class="koltuk__kartlar"><div class="kart" data-kart="Jd" data-renk="d"></div><div class="kart" data-kart="Jc" data-renk="c"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Can</span><span class="koltuk__cip">0</span></div>
+      
+    </div>
+  </section>
+
+  <h2 class="bolum" id="b5">Masa: 2 kişi, preflop</h2>
+  
+  <section class="masa" data-oyuncu-sayisi="2" aria-label="2 kişilik masa">
+    <div class="masa__merkez">
+      <div class="masa__pot"><span class="cip-yigin" data-adet="1" data-deger="5"></span>Pot <b>30</b></div>
+      <div class="masa__board"><div class="kart kart--yuva"></div><div class="kart kart--yuva"></div><div class="kart kart--yuva"></div><div class="kart kart--yuva"></div><div class="kart kart--yuva"></div></div>
+      <p class="masa__sokak">Preflop</p>
+    </div>
+    <div class="koltuk koltuk--insan koltuk--sirada" data-koltuk="0">
+      <span class="koltuk__eylem"></span>
+      <div class="koltuk__kartlar"><div class="kart" data-kart="9s" data-renk="s"></div><div class="kart" data-kart="9c" data-renk="c"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Sen</span><span class="koltuk__cip">990</span><span class="koltuk__rozetler"><span class="rozet rozet--dealer" title="dealer">D</span><span class="rozet rozet--sb" title="SB">SB</span></span></div>
+      <span class="koltuk__bahis"><span class="cip-yigin" data-adet="1" data-deger="5"></span>10</span>
+    </div>
+    <div class="koltuk" data-koltuk="1">
+      <span class="koltuk__eylem"></span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Bot</span><span class="koltuk__cip">980</span><span class="koltuk__rozetler"><span class="rozet rozet--bb" title="BB">BB</span></span></div>
+      <span class="koltuk__bahis"><span class="cip-yigin" data-adet="1" data-deger="10"></span>20</span>
+    </div>
+  </section>
+
+  <h2 class="bolum" id="b6">Masa: 3 ve 5 kişi</h2>
+  <div class="iki">
+  <section class="masa" data-oyuncu-sayisi="3" aria-label="3 kişilik masa">
+    <div class="masa__merkez">
+      <div class="masa__pot"><span class="cip-yigin" data-adet="4" data-deger="25"></span>Pot <b>260</b></div>
+      <div class="masa__board"><div class="kart" data-kart="Qs" data-renk="s"></div><div class="kart" data-kart="Jh" data-renk="h"></div><div class="kart" data-kart="Td" data-renk="d"></div><div class="kart" data-kart="4c" data-renk="c"></div><div class="kart kart--yuva"></div></div>
+      <p class="masa__sokak">Turn</p>
+    </div>
+    <div class="koltuk koltuk--insan" data-koltuk="0">
+      <span class="koltuk__eylem"></span>
+      <div class="koltuk__kartlar"><div class="kart" data-kart="As" data-renk="s"></div><div class="kart" data-kart="Kh" data-renk="h"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Sen</span><span class="koltuk__cip">700</span><span class="koltuk__rozetler"><span class="rozet rozet--bb" title="BB">BB</span></span></div>
+      
+    </div>
+    <div class="koltuk" data-koltuk="1">
+      <span class="koltuk__eylem koltuk__eylem--agresif">Bet 80</span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Elif</span><span class="koltuk__cip">820</span><span class="koltuk__rozetler"><span class="rozet rozet--dealer" title="dealer">D</span></span></div>
+      <span class="koltuk__bahis"><span class="cip-yigin" data-adet="2" data-deger="25"></span>80</span>
+    </div>
+    <div class="koltuk koltuk--fold" data-koltuk="2">
+      <span class="koltuk__eylem koltuk__eylem--fold">Fold</span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Mert</span><span class="koltuk__cip">1.480</span><span class="koltuk__rozetler"><span class="rozet rozet--sb" title="SB">SB</span></span></div>
+      
+    </div>
+  </section>
+  <section class="masa" data-oyuncu-sayisi="5" aria-label="5 kişilik masa">
+    <div class="masa__merkez">
+      <div class="masa__pot"><span class="cip-yigin" data-adet="4" data-deger="25"></span>Pot <b>90</b></div>
+      <div class="masa__board"><div class="kart" data-kart="Ah" data-renk="h"></div><div class="kart" data-kart="Ad" data-renk="d"></div><div class="kart" data-kart="3c" data-renk="c"></div><div class="kart kart--yuva"></div><div class="kart kart--yuva"></div></div>
+      <p class="masa__sokak">Flop</p>
+    </div>
+    <div class="koltuk koltuk--insan" data-koltuk="0">
+      <span class="koltuk__eylem">Check</span>
+      <div class="koltuk__kartlar"><div class="kart" data-kart="Ac" data-renk="c"></div><div class="kart" data-kart="Js" data-renk="s"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Sen</span><span class="koltuk__cip">1.000</span></div>
+      
+    </div>
+    <div class="koltuk koltuk--sirada" data-koltuk="1">
+      <span class="koltuk__eylem"></span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Elif</span><span class="koltuk__cip">1.020</span></div>
+      
+    </div>
+    <div class="koltuk" data-koltuk="2">
+      <span class="koltuk__eylem"></span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Mert</span><span class="koltuk__cip">890</span><span class="koltuk__rozetler"><span class="rozet rozet--dealer" title="dealer">D</span></span></div>
+      
+    </div>
+    <div class="koltuk koltuk--fold" data-koltuk="3">
+      <span class="koltuk__eylem koltuk__eylem--fold">Fold</span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Zeynep</span><span class="koltuk__cip">1.100</span></div>
+      
+    </div>
+    <div class="koltuk" data-koltuk="4">
+      <span class="koltuk__eylem"></span>
+      <div class="koltuk__kartlar"><div class="kart kart--arka"></div><div class="kart kart--arka"></div></div>
+      <div class="koltuk__kimlik"><span class="koltuk__ad">Can</span><span class="koltuk__cip">600</span><span class="koltuk__rozetler"><span class="rozet rozet--bb" title="BB">BB</span></span></div>
+      <span class="koltuk__bahis"><span class="cip-yigin" data-adet="1" data-deger="10"></span>30</span>
+    </div>
+  </section></div>
+
+  <h2 class="bolum" id="b7">Eylem çubuğu</h2>
+  <p class="not">Raise paneli açıkken (üstte) ve kapalıyken. İkinci çubuk, sıra başkasındayken.</p>
+  <div class="eylem-cubugu" role="group" aria-label="Eylemler">
+    <div class="raise-paneli">
+      <div class="raise-paneli__ust"><span>Bu sokakta toplam bahsin</span><output class="raise-paneli__miktar">80</output></div>
+      <input class="kaydirici" type="range" min="40" max="960" step="10" value="80" style="--dolu:8%" aria-label="Raise miktarı">
+      <div class="hizli-tutarlar">
+        <button class="hizli" type="button">½ pot</button>
+        <button class="hizli" type="button" aria-pressed="true">Pot</button>
+        <button class="hizli" type="button">All-in</button>
+      </div>
+      <button class="dugme dugme--ikincil" type="button">Raise 80</button>
+    </div>
+    <div class="eylem-cubugu__butonlar">
+      <button class="dugme eylem eylem--fold" type="button">Fold<kbd>F</kbd></button>
+      <button class="dugme eylem eylem--call" type="button">Call<span class="eylem__tutar">20</span><kbd>C</kbd></button>
+      <button class="dugme eylem eylem--raise" type="button" aria-expanded="true">Raise<kbd>R</kbd></button>
+    </div>
+  </div>
+  <div class="eylem-cubugu eylem-cubugu--bekle" role="group" aria-label="Eylemler (sıra sende değil)">
+    <p class="eylem-cubugu__durum">Sıra Zeynep'te…</p>
+    <div class="eylem-cubugu__butonlar">
+      <button class="dugme eylem eylem--fold" type="button" disabled>Fold</button>
+      <button class="dugme eylem eylem--check" type="button" disabled>Check</button>
+      <button class="dugme eylem eylem--raise" type="button" disabled>Bet</button>
+    </div>
+  </div>
+
+  <h2 class="bolum" id="b8">Koç</h2>
+  <aside class="koc" data-not="ipucu" role="status">
+    <span class="koc__simge" aria-hidden="true"></span>
+    <div class="koc__govde"><h3 class="koc__baslik">Koçun önerisi</h3><p class="koc__mesaj">Elinde 9 out var, 2-4 kuralıyla yaklaşık %36. Pot sana %25 veriyor, call mantıklı.</p><dl class="koc__ayrinti"><div><dt>Equity</dt><dd>%36</dd></div><div><dt>Gereken</dt><dd>%25</dd></div><div><dt>Out</dt><dd>9</dd></div></dl></div>
+    <button class="ikon-dugme koc__kapat" aria-label="Notu kapat">✕</button>
+  </aside>
+  <aside class="koc" data-not="iyi" role="status">
+    <span class="koc__simge" aria-hidden="true"></span>
+    <div class="koc__govde"><h3 class="koc__baslik">İyi karar</h3><p class="koc__mesaj">Floş çekişin var ve pot oranı sana yetiyor. Call doğru.</p><dl class="koc__ayrinti"><div><dt>Equity</dt><dd>%36</dd></div><div><dt>Gereken</dt><dd>%25</dd></div><div><dt>Out</dt><dd>9</dd></div></dl></div>
+    <button class="ikon-dugme koc__kapat" aria-label="Notu kapat">✕</button>
+  </aside>
+  <aside class="koc" data-not="supheli" role="status">
+    <span class="koc__simge" aria-hidden="true"></span>
+    <div class="koc__govde"><h3 class="koc__baslik">Biraz riskli</h3><p class="koc__mesaj">Raise edebilirdin, ama call da savunulur. Rakip az önce güçlü bahis yaptı.</p></div>
+    <button class="ikon-dugme koc__kapat" aria-label="Notu kapat">✕</button>
+  </aside>
+  <aside class="koc" data-not="hata" role="status">
+    <span class="koc__simge" aria-hidden="true"></span>
+    <div class="koc__govde"><h3 class="koc__baslik">Hata</h3><p class="koc__mesaj">Pot sana %20 veriyor, tutturma şansın %9. Burada fold etmek daha iyiydi.</p><dl class="koc__ayrinti"><div><dt>Equity</dt><dd>%36</dd></div><div><dt>Gereken</dt><dd>%25</dd></div><div><dt>Out</dt><dd>9</dd></div></dl></div>
+    <button class="ikon-dugme koc__kapat" aria-label="Notu kapat">✕</button>
+  </aside>
+
+  <h2 class="bolum" id="b9">Sayma paneli</h2>
+  <section class="sayma" aria-label="Kart sayma">
+    <div class="sayma__baslik"><h3>Görmediğin kartlar</h3><span class="sayma__kalan"><b>36</b> bilinmeyen</span></div>
+    <div class="sayma__izgara"><div class="sayma__satir" data-renk="s"><span class="sayma__etiket" aria-hidden="true"></span><span class="say-hucre say-hucre--goruldu" data-kart="2s" data-renk="s" title="2s"></span><span class="say-hucre" data-kart="3s" data-renk="s" title="3s"></span><span class="say-hucre" data-kart="4s" data-renk="s" title="4s"></span><span class="say-hucre" data-kart="5s" data-renk="s" title="5s"></span><span class="say-hucre" data-kart="6s" data-renk="s" title="6s"></span><span class="say-hucre" data-kart="7s" data-renk="s" title="7s"></span><span class="say-hucre" data-kart="8s" data-renk="s" title="8s"></span><span class="say-hucre" data-kart="9s" data-renk="s" title="9s"></span><span class="say-hucre" data-kart="Ts" data-renk="s" title="Ts"></span><span class="say-hucre" data-kart="Js" data-renk="s" title="Js"></span><span class="say-hucre say-hucre--out" data-kart="Qs" data-renk="s" title="Qs"></span><span class="say-hucre say-hucre--goruldu" data-kart="Ks" data-renk="s" title="Ks"></span><span class="say-hucre say-hucre--out" data-kart="As" data-renk="s" title="As"></span></div><div class="sayma__satir" data-renk="h"><span class="sayma__etiket" aria-hidden="true"></span><span class="say-hucre" data-kart="2h" data-renk="h" title="2h"></span><span class="say-hucre" data-kart="3h" data-renk="h" title="3h"></span><span class="say-hucre" data-kart="4h" data-renk="h" title="4h"></span><span class="say-hucre" data-kart="5h" data-renk="h" title="5h"></span><span class="say-hucre" data-kart="6h" data-renk="h" title="6h"></span><span class="say-hucre" data-kart="7h" data-renk="h" title="7h"></span><span class="say-hucre" data-kart="8h" data-renk="h" title="8h"></span><span class="say-hucre say-hucre--goruldu" data-kart="9h" data-renk="h" title="9h"></span><span class="say-hucre" data-kart="Th" data-renk="h" title="Th"></span><span class="say-hucre" data-kart="Jh" data-renk="h" title="Jh"></span><span class="say-hucre say-hucre--out" data-kart="Qh" data-renk="h" title="Qh"></span><span class="say-hucre say-hucre--goruldu" data-kart="Kh" data-renk="h" title="Kh"></span><span class="say-hucre say-hucre--goruldu" data-kart="Ah" data-renk="h" title="Ah"></span></div><div class="sayma__satir" data-renk="d"><span class="sayma__etiket" aria-hidden="true"></span><span class="say-hucre" data-kart="2d" data-renk="d" title="2d"></span><span class="say-hucre" data-kart="3d" data-renk="d" title="3d"></span><span class="say-hucre" data-kart="4d" data-renk="d" title="4d"></span><span class="say-hucre" data-kart="5d" data-renk="d" title="5d"></span><span class="say-hucre" data-kart="6d" data-renk="d" title="6d"></span><span class="say-hucre say-hucre--goruldu" data-kart="7d" data-renk="d" title="7d"></span><span class="say-hucre" data-kart="8d" data-renk="d" title="8d"></span><span class="say-hucre" data-kart="9d" data-renk="d" title="9d"></span><span class="say-hucre say-hucre--goruldu" data-kart="Td" data-renk="d" title="Td"></span><span class="say-hucre say-hucre--goruldu" data-kart="Jd" data-renk="d" title="Jd"></span><span class="say-hucre say-hucre--goruldu" data-kart="Qd" data-renk="d" title="Qd"></span><span class="say-hucre say-hucre--goruldu" data-kart="Kd" data-renk="d" title="Kd"></span><span class="say-hucre" data-kart="Ad" data-renk="d" title="Ad"></span></div><div class="sayma__satir" data-renk="c"><span class="sayma__etiket" aria-hidden="true"></span><span class="say-hucre" data-kart="2c" data-renk="c" title="2c"></span><span class="say-hucre" data-kart="3c" data-renk="c" title="3c"></span><span class="say-hucre" data-kart="4c" data-renk="c" title="4c"></span><span class="say-hucre" data-kart="5c" data-renk="c" title="5c"></span><span class="say-hucre" data-kart="6c" data-renk="c" title="6c"></span><span class="say-hucre" data-kart="7c" data-renk="c" title="7c"></span><span class="say-hucre" data-kart="8c" data-renk="c" title="8c"></span><span class="say-hucre" data-kart="9c" data-renk="c" title="9c"></span><span class="say-hucre" data-kart="Tc" data-renk="c" title="Tc"></span><span class="say-hucre say-hucre--goruldu" data-kart="Jc" data-renk="c" title="Jc"></span><span class="say-hucre" data-kart="Qc" data-renk="c" title="Qc"></span><span class="say-hucre say-hucre--goruldu" data-kart="Kc" data-renk="c" title="Kc"></span><span class="say-hucre say-hucre--out" data-kart="Ac" data-renk="c" title="Ac"></span></div></div>
+    <div class="sayma__dagilim"><div class="dagilim" data-renk="s"><span class="dagilim__etiket">10</span><span class="dagilim__cubuk" style="--oran:0.77"></span></div><div class="dagilim" data-renk="h"><span class="dagilim__etiket">8</span><span class="dagilim__cubuk" style="--oran:0.62"></span></div><div class="dagilim" data-renk="d"><span class="dagilim__etiket">7</span><span class="dagilim__cubuk" style="--oran:0.54"></span></div><div class="dagilim" data-renk="c"><span class="dagilim__etiket">11</span><span class="dagilim__cubuk" style="--oran:0.85"></span></div></div>
+  </section>
+
+  <h2 class="bolum" id="b10">Ders ekranı</h2>
+  <div class="ders">
+    <div class="ders__ust"><span>Seviye 1: El sıralaması</span><span>Ders 2 / 4</span></div>
+    <article class="ders__kart">
+      <h2 class="ders__baslik">Floş, sıralıdan güçlüdür</h2>
+      <div class="ders__gorsel kece">
+        <div class="kart-sirasi" style="--kw:52px"><div class="kart" data-kart="Ah" data-renk="h"></div><div class="kart" data-kart="9h" data-renk="h"></div><div class="kart" data-kart="7h" data-renk="h"></div><div class="kart" data-kart="4h" data-renk="h"></div><div class="kart" data-kart="2h" data-renk="h"></div></div>
+        <p class="ders__gorsel-etiket">Aynı renkten beş kart: floş</p>
+      </div>
+      <div class="ders__metin">
+        <p><strong>Floş</strong>, beş kartın da aynı renkten olmasıdır; sıralı olmaları gerekmez.</p>
+        <p>İki oyuncunun da floşu varsa, en yüksek kartı büyük olan kazanır. Renkler arasında üstünlük yoktur.</p>
+      </div>
+      <nav class="ders__gezinti" aria-label="Ders gezintisi">
+        <button class="dugme" type="button">Geri</button>
+        <div class="noktalar" role="img" aria-label="2. ders, toplam 4"><span class="nokta nokta--bitti"></span><span class="nokta" aria-current="step"></span><span class="nokta"></span><span class="nokta"></span></div>
+        <button class="dugme dugme--birincil" type="button">İleri</button>
+      </nav>
+    </article>
+  </div>
+
+  <h2 class="bolum" id="b11">Soru</h2>
+  <div class="iki">
+    <section class="soru" aria-label="Soru, cevap verildi (doğru)">
+      <div class="soru__ust"><span>Soru 3 / 8</span><div class="ilerleme"><div class="ilerleme__dolu" style="width:37%"></div></div></div>
+      <h3 class="soru__metin">Hangi el daha güçlü?</h3>
+      <div class="soru__gorsel kece"><div class="kart-sirasi"><div class="kart" data-kart="Kh" data-renk="h"></div><div class="kart" data-kart="7d" data-renk="d"></div><div class="kart" data-kart="2s" data-renk="s"></div></div><p class="ders__gorsel-etiket">Board</p></div>
+      <div class="karsilastirma">
+        <button class="el-secenek el-secenek--dogru" type="button" disabled><span>A</span><span class="kart-sirasi"><div class="kart" data-kart="Ks" data-renk="s"></div><div class="kart" data-kart="9c" data-renk="c"></div></span></button>
+        <button class="el-secenek el-secenek--yanlis" type="button" disabled><span>B</span><span class="kart-sirasi"><div class="kart" data-kart="Qh" data-renk="h"></div><div class="kart" data-kart="Qd" data-renk="d"></div></span></button>
+        <button class="dugme karsilastirma__esit" type="button" disabled>Eşit</button>
+      </div>
+      <div class="geri-bildirim" role="status"><strong>Doğru.</strong>Papaz çifti, vale çiftinden güçlüdür.</div>
+      <div class="soru__alt"><button class="dugme dugme--birincil" type="button">Sonraki soru</button></div>
+    </section>
+    <section class="soru" aria-label="Soru, cevap verildi (yanlış)">
+      <div class="soru__ust"><span>Soru 4 / 8</span><div class="ilerleme"><div class="ilerleme__dolu" style="width:50%"></div></div></div>
+      <h3 class="soru__metin">Elinde kupa A, kupa 9; board'da iki kupa var. Kaç out'un var?</h3>
+      <div class="secenekler" role="radiogroup" aria-label="Seçenekler">
+        <button class="secenek secenek--soluk" type="button" role="radio" aria-checked="false" disabled><span class="secenek__harf">A</span><span>4</span></button>
+        <button class="secenek secenek--yanlis" type="button" role="radio" aria-checked="true" disabled><span class="secenek__harf">B</span><span>8</span></button>
+        <button class="secenek secenek--dogru" type="button" role="radio" aria-checked="false" disabled><span class="secenek__harf">C</span><span>9</span></button>
+        <button class="secenek" type="button" role="radio" aria-checked="false"><span class="secenek__harf">D</span><span>13</span></button>
+        <button class="secenek secenek--secili" type="button" role="radio" aria-checked="true"><span class="secenek__harf">E</span><span>Seçili ama henüz gönderilmedi</span></button>
+      </div>
+      <div class="geri-bildirim geri-bildirim--yanlis" role="status"><strong>Yanlış.</strong>Destede 13 kupa var; ikisi board'da, ikisi elinde. Geriye 9 kupa kalır.</div>
+    </section>
+  </div>
+
+  <h2 class="bolum" id="b12">Yıldızlar</h2>
+  <div class="satir" style="align-items:center"><span class="yildizlar" role="img" aria-label="0 yıldız"><span class="yildiz" style="--s:0"></span><span class="yildiz" style="--s:1"></span><span class="yildiz" style="--s:2"></span></span><span class="yildizlar" role="img" aria-label="1 yıldız"><span class="yildiz yildiz--dolu" style="--s:0"></span><span class="yildiz" style="--s:1"></span><span class="yildiz" style="--s:2"></span></span><span class="yildizlar" role="img" aria-label="2 yıldız"><span class="yildiz yildiz--dolu" style="--s:0"></span><span class="yildiz yildiz--dolu" style="--s:1"></span><span class="yildiz" style="--s:2"></span></span><span class="yildizlar" role="img" aria-label="3 yıldız"><span class="yildiz yildiz--dolu" style="--s:0"></span><span class="yildiz yildiz--dolu" style="--s:1"></span><span class="yildiz yildiz--dolu" style="--s:2"></span></span></div>
+
+  <h2 class="bolum" id="b13">Seviye haritası</h2>
+  <section class="karsilama"><h1>Merhaba, nerede kalmıştık?</h1><p>Bahis dersi hazır. Üç yıldız şart değil: bir yıldız sonraki seviyeyi açar.</p></section>
+  <ol class="harita"><li class="harita__satir">
+      <button class="dugum dugum--tamam" type="button" aria-label="Seviye 0: Deste, tamamlandı, 3 yıldız"><span class="dugum__no">0</span></button>
+      <div class="harita__bilgi"><h3 class="harita__ad">Deste</h3><p class="harita__ozet">52 kart, dört renk, değerler.</p><span class="yildizlar" role="img" aria-label="3 yıldız"><span class="yildiz yildiz--dolu" style="--s:0"></span><span class="yildiz yildiz--dolu" style="--s:1"></span><span class="yildiz yildiz--dolu" style="--s:2"></span></span></div>
+    </li><li class="harita__satir">
+      <button class="dugum dugum--tamam" type="button" aria-label="Seviye 1: El sıralaması, tamamlandı, 2 yıldız"><span class="dugum__no">1</span></button>
+      <div class="harita__bilgi"><h3 class="harita__ad">El sıralaması</h3><p class="harita__ozet">Hangi el hangisini yener?</p><span class="yildizlar" role="img" aria-label="2 yıldız"><span class="yildiz yildiz--dolu" style="--s:0"></span><span class="yildiz yildiz--dolu" style="--s:1"></span><span class="yildiz" style="--s:2"></span></span></div>
+    </li><li class="harita__satir">
+      <button class="dugum dugum--tamam" type="button" aria-label="Seviye 2: Elin akışı, tamamlandı, 1 yıldız"><span class="dugum__no">2</span></button>
+      <div class="harita__bilgi"><h3 class="harita__ad">Elin akışı</h3><p class="harita__ozet">Preflop, flop, turn, river.</p><span class="yildizlar" role="img" aria-label="1 yıldız"><span class="yildiz yildiz--dolu" style="--s:0"></span><span class="yildiz" style="--s:1"></span><span class="yildiz" style="--s:2"></span></span></div>
+    </li><li class="harita__satir">
+      <button class="dugum dugum--acik" type="button" aria-label="Seviye 3: Bahis, açık"><span class="dugum__no">3</span></button>
+      <div class="harita__bilgi"><h3 class="harita__ad">Bahis</h3><p class="harita__ozet">Check, call, raise, fold.</p><span class="yildizlar" role="img" aria-label="0 yıldız"><span class="yildiz" style="--s:0"></span><span class="yildiz" style="--s:1"></span><span class="yildiz" style="--s:2"></span></span></div>
+    </li><li class="harita__satir harita__satir--kilitli">
+      <button class="dugum dugum--kilitli" type="button" disabled aria-label="Seviye 4: Başlangıç elleri, kilitli"><span class="dugum__no">4</span></button>
+      <div class="harita__bilgi"><h3 class="harita__ad">Başlangıç elleri</h3><p class="harita__ozet">Hangi iki kartla oynanır?</p><span class="yildizlar" role="img" aria-label="0 yıldız"><span class="yildiz" style="--s:0"></span><span class="yildiz" style="--s:1"></span><span class="yildiz" style="--s:2"></span></span></div>
+    </li><li class="harita__satir harita__satir--kilitli">
+      <button class="dugum dugum--kilitli dugum--final" type="button" disabled aria-label="Seviye 10: Final turnuvası, kilitli"><span class="dugum__no">10</span></button>
+      <div class="harita__bilgi"><h3 class="harita__ad">Final turnuvası</h3><p class="harita__ozet">Öğrendiğin her şey, altı kişilik masada.</p><span class="yildizlar" role="img" aria-label="0 yıldız"><span class="yildiz" style="--s:0"></span><span class="yildiz" style="--s:1"></span><span class="yildiz" style="--s:2"></span></span></div>
+    </li></ol>
+
+  <h2 class="bolum" id="b14">Sonuç ekranı (modal)</h2>
+  <div class="modal-onizleme">
+    <div class="modal__kutu sonuc" role="dialog" aria-label="Seviye sonucu" style="max-height:none">
+      <span class="yildizlar yildizlar--buyuk" role="img" aria-label="2 yıldız"><span class="yildiz yildiz--dolu" style="--s:0"></span><span class="yildiz yildiz--dolu" style="--s:1"></span><span class="yildiz" style="--s:2"></span></span>
+      <h2 class="sonuc__baslik">Seviye 2 tamam</h2>
+      <p class="sonuc__ozet">8 sorudan 7'sini doğru yaptın. Bir tane daha doğru yapsan üçüncü yıldız senin.</p>
+      <dl class="sonuc__istatistik"><div><dt>Doğru</dt><dd>7/8</dd></div><div><dt>Süre</dt><dd>3:20</dd></div><div><dt>Yıldız</dt><dd>2</dd></div></dl>
+      <div class="sonuc__butonlar">
+        <button class="dugme dugme--birincil" type="button">Sıradaki seviye</button>
+        <button class="dugme" type="button">Tekrar dene</button>
+        <button class="dugme dugme--sade" type="button">Haritaya dön</button>
+      </div>
+    </div>
+  </div>
+  <div style="height:var(--space-6)"></div>
+  <div class="bildirim" style="position:static;transform:none;display:inline-block;animation:none">Deste karıldı: sayma sıfırlandı</div>
+</div>
+<script>
+  /* Yalnızca vitrin: tema ve dört renk anahtarları */
+  const k = document.documentElement;
+  document.getElementById('tema').addEventListener('click', () => {
+    const koyu = getComputedStyle(k).colorScheme.includes('dark');
+    k.dataset.theme = koyu ? 'light' : 'dark';
+  });
+  document.getElementById('dort').addEventListener('change', (e) => k.classList.toggle('dort-renk', e.target.checked));
+  const q = new URLSearchParams(location.search);
+  if (q.get('tema')) k.dataset.theme = q.get('tema');
+  if (q.has('dort')) { k.classList.add('dort-renk'); document.getElementById('dort').checked = true; }
+</script>
+</body>
+</html>

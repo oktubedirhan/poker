@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="felt" cx="50%" cy="38%" r="80%">
+      <stop offset="0" stop-color="#3556b8"/><stop offset=".5" stop-color="#243f92"/><stop offset="1" stop-color="#131f56"/>
+    </radialGradient>
+    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r="1.6" fill="#fff" fill-opacity=".08"/></pattern>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity=".4"/></filter>
+  </defs>
+  <rect width="512" height="512" fill="url(#felt)"/>
+  <rect width="512" height="512" fill="url(#dots)"/>
+  <g transform="translate(256 256) scale(.74) translate(-256 -256)">
+  <ellipse cx="256" cy="262" rx="206" ry="150" fill="none" stroke="#f6d873" stroke-opacity=".38" stroke-width="3" stroke-dasharray="3 11" stroke-linecap="round"/>
+  <g filter="url(#sh)" transform="translate(196 272) rotate(-13)">
+    <rect x="-96" y="-134" width="192" height="268" rx="18" fill="#fffefb"/>
+    <text x="-78" y="-72" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="76" fill="#191c24">A</text>
+    <path transform="translate(-52 -22) scale(.34)" fill="#191c24" d="M0-62C-18-38-58-18-58 12c0 20 15 33 32 33 11 0 20-5 24-12-2 16-9 26-20 33h44C11 59 4 49 2 33c4 7 13 12 24 12 17 0 32-13 32-33C58-18 18-38 0-62z"/>
+    <path transform="translate(14 40) scale(.9)" fill="#191c24" d="M0-62C-18-38-58-18-58 12c0 20 15 33 32 33 11 0 20-5 24-12-2 16-9 26-20 33h44C11 59 4 49 2 33c4 7 13 12 24 12 17 0 32-13 32-33C58-18 18-38 0-62z"/>
+  </g>
+  <g filter="url(#sh)" transform="translate(318 262) rotate(10)">
+    <rect x="-96" y="-134" width="192" height="268" rx="18" fill="#fffefb"/>
+    <text x="-78" y="-72" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="76" fill="#c0262d">A</text>
+    <path transform="translate(-52 -20) scale(.34)" fill="#c0262d" d="M0 40C-74 -6 -54 -50 -27 -50C-13 -50 -3 -42 0 -31C3 -42 13 -50 27 -50C54 -50 74 -6 0 40Z"/>
+    <path transform="translate(14 36) scale(1.05)" fill="#c0262d" d="M0 40C-74 -6 -54 -50 -27 -50C-13 -50 -3 -42 0 -31C3 -42 13 -50 27 -50C54 -50 74 -6 0 40Z"/>
+  </g></g>
+</svg>
