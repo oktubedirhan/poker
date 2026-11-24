@@ -14,7 +14,7 @@ export default {
       metin:
         'Güçlüden zayıfa: **Royal Floş** (aynı renkten 10-Vale-Kız-Papaz-As), **Sıralı Floş** (straight flush: aynı renkten 5 ardışık kart), **Dörtlü** (four of a kind: 4 aynı değer), **Ful** (full house: bir üçlü + bir çift), **Floş** (flush: aynı renkten 5 kart).\n\n' +
         'Sonra: **Sıralı** (straight: ardışık 5 kart, renk önemsiz), **Üçlü** (three of a kind / set), **İki Çift**, **Çift** ve en zayıfı **Yüksek Kart**.\n\n' +
-        'Sıra size zor gelirse şu kural işe yarar: bir el ne kadar az sıklıkla gelirse o kadar güçlüdür.',
+        'Sıralamayı ezberlemekte zorlanırsan şu kural işe yarar: bir el ne kadar az sıklıkla gelirse o kadar güçlüdür.',
       kartlar: ['Ah', 'Kh', 'Qh', 'Jh', 'Th'],
     },
     {
@@ -62,7 +62,7 @@ export default {
     { tur: 'hangisiGuclu', board: ['As', 'Ks', 'Qs', 'Js', 'Ts'], elA: ['2h', '3d'], elB: ['9c', '8d'], dogru: 'esit',
       aciklama: 'Masada Royal Floş var. İkiniz de onu oynarsınız, kimse geçemez. Pot ikiye bölünür.' },
     { tur: 'enIyi5', kartlar: ['As', 'Ks', '7s', '2s', '9s', 'Kd', 'Kc'],
-      aciklama: 'En iyi 5: A-K-9-7-2 maçalar, yani floş. Üç Papaz (üçlü) da var ama floş üçlüden güçlüdür.' },
+      aciklama: 'En iyi 5: A-K-9-7-2 hepsi Maça, yani floş. Üç Papaz (üçlü) da var ama floş üçlüden güçlüdür.' },
     { tur: 'enIyi5', kartlar: ['9c', '9d', '9h', '4s', '4d', 'Ac', 'Kc'],
       aciklama: 'En iyi 5: 9-9-9-4-4 ful. As ve Papaz yan kart olarak işe yaramaz.' },
     { tur: 'enIyi5', kartlar: ['6d', '7d', '8c', '9s', 'Th', 'Tc', '2h'],

@@ -166,8 +166,8 @@ function preflopDegerlendir(gorunum, tur, ey, d, rng) {
   const guclu = sinif === 'premium' || sinif === 'guclu';
 
   if (tur === 'fold') {
-    if (d.cagri === 0) return NOT('hata', 'Bedava check\'i atma', `Call edecek bir şey yok; check etmek bedava. ${ad} elini atmak için sebep yok.`, ay);
-    if (guclu) return NOT('hata', 'Güçlü eli attın', `${ad} güçlü bir başlangıç eli. Fold etmek burada değer kaçırmaktır.`, ay);
+    if (d.cagri === 0) return NOT('hata', 'Bedava check\'te fold etme', `Call edecek bir şey yok; check etmek bedava. ${ad} elini atmak için sebep yok.`, ay);
+    if (guclu) return NOT('hata', 'Güçlü eli fold ettin', `${ad} güçlü bir başlangıç eli. Fold etmek burada değer kaçırmaktır.`, ay);
     if (sinif === 'oynanir') {
       return NOT('supheli', 'Biraz fazla temkinli', `${ad} ${poz} pozisyonunda oynanabilir bir el${d.yukseltildi ? ', ama raise\'e karşı fold da savunulur' : '; call ya da raise düşünebilirdin'}.`, ay);
     }
@@ -213,7 +213,7 @@ function postflopDegerlendir(gorunum, tur, ey, d, rng) {
   const kalanOut = outMetni(a);
 
   if (tur === 'fold') {
-    if (d.cagri === 0) return NOT('hata', 'Bedava check\'i atma', 'Rakip bahis açmadı; check etmek bedava. Fold etmenin hiçbir anlamı yok.', ay);
+    if (d.cagri === 0) return NOT('hata', 'Bedava check\'te fold etme', 'Rakip bahis açmadı; check etmek bedava. Fold etmenin hiçbir anlamı yok.', ay);
     const fark = eq - a.gerek;
     if (fark > 0.12) return NOT('hata', 'Fazla temkinli fold', `${kalanOut}Equity'n ${eqY}, pot sadece ${gerekY} istiyor. Call matematiksel olarak kârlıydı.`, ay);
     if (fark > 0.04) return NOT('supheli', 'Sınırda fold', `${kalanOut}Equity'n ${eqY}, pot ${gerekY} istiyor; call hafif kârlıydı. Rakip güçlü görünüyorsa fold savunulur.`, ay);

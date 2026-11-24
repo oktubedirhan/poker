@@ -85,13 +85,13 @@ export const PROFILLER = {
     id: 'blofcu',
     ad: 'Blöfçü',
     aciklama:
-      'Sık sık, büyük bahislerle blöf yapar; özellikle turn ve river\'da. Ona karşı korkma: ' +
+      'Sık sık, büyük bahislerle blöf yapar; özellikle turn ve river\'da. Ondan korkma: ' +
       'orta güçte bir eli (örn. top pair) ile call etmek çoğu zaman kârlıdır. Onu blöf yaparken yakala.',
     ipuclari: [
       'Turn ve river\'da, check\'e karşı sık sık büyük bahis açar.',
       'Bahsi büyük ama eli çoğu zaman zayıf; orta güçte elinle call et.',
       'Preflop\'ta orta genişlikte oynar, flop\'ta daha temkinlidir; asıl blöfü sonra yapar.',
-      'Sen bahis açınca kolay fold eder; ama check\'ledikçe o bahsi alır.',
+      'Sen bahis açınca kolayca fold eder; ama sen check ettikçe o bahis açar.',
     ],
     params: {
       preflop: { esik: 6, pozEtki: 0.2, raiseKorku: 0.4, raiseSkor: 9, raiseOran: 0.4, yenidenRaiseSkor: 12, yenidenRaiseOran: 0.3, steal: 0.25, boyut: 3 },

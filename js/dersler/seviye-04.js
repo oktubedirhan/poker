@@ -16,7 +16,7 @@ export default {
       metin:
         'İki kartın 169 farklı biçimde gelebilir (renk farkı sayılmadan) ve hepsi eşit değil. En güçlü eller **premium** denilen ellerdir: **As-As** (pocket aces), **Papaz-Papaz**, **Kız-Kız** ve **As-Papaz**.\n\n' +
         'Cep çifti (pocket pair, iki kart aynı değer) en baştan bir çifttir; set (üçlü) yapma şansın da vardır. Yüksek kartlar (As, Papaz, Kız, Vale) da güçlüdür çünkü çift yaptıklarında büyük çift olurlar.\n\n' +
-        'Elinin yarısından çoğu fold edilmelidir. Sabırlı olmak, yeni başlayanın en kârlı alışkanlığıdır.',
+        'Gelen ellerin yarısından çoğu fold edilmelidir. Sabırlı olmak, yeni başlayanın en kârlı alışkanlığıdır.',
       kartlar: ['As', 'Ah'],
     },
     {

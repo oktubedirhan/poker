@@ -29,7 +29,7 @@ export default {
       metin:
         'Bir kartın gelme olasılığı = **kalan o türden kart ÷ bilinmeyen kart**. Yukarıdaki örnekte 10 ÷ 47 ≈ **%21**.\n\n' +
         'Resimli kart (Vale, Kız, Papaz) için: 12 resimli kart var; 2 tanesini gördüysen 10 ÷ 50 = %20. Belli bir değer (As gibi) için de aynı: destede kalan As sayısı ÷ bilinmeyen kart sayısı.\n\n' +
-        'Pratik hile: gördüğün her kartta payda 1 azalır, o türden kartta pay da 1 azalır. Bu hesabı hızlı yapmaya alıştıkça outs ve pot oranı hesabı da kolaylaşır.',
+        'Pratik hile: gördüğün her kartta payda 1 azalır, o türden kartta pay da 1 azalır. Bu hesabı hızlı yapmaya alıştıkça out ve pot oranı hesabı da kolaylaşır.',
     },
   ],
   alistirmalar: [

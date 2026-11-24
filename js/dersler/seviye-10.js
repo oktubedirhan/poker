@@ -27,7 +27,7 @@ export default {
       baslik: 'Rakip tiplerini kullan',
       metin:
         'Masada her tip var: **pasifAcemi**, **sikiPasif**, **gevsekAgresif**, **blofcu**, **akilli**. İlk elleri onları tanımak için kullan, sonra stratejini onlara göre uyarla.\n\n' +
-        'Güçlü elinle çağrı istasyonundan para topla, kayayı (sikiPasif) blind\'leriyle çal, blöfçüye call et, akilli\'ye karşı hata yapma.\n\n' +
+        'Güçlü elinle çağrı istasyonundan para topla, kayanın (sikiPasif) blind\'lerini çal, blöfçüye call et, akilli\'ye karşı hata yapma.\n\n' +
         'Son hatırlatma: sabırlı ol, pozisyonu kullan, olasılığı hesapla. İyi şanslar!',
     },
   ],
@@ -49,7 +49,7 @@ export default {
     { tur: 'secmeli', soru: '10 BB\'den azın var ve güçlü bir elin geldi. En iyi seçenek genelde nedir?', secenekler: ['Min-raise yapıp call etmek', 'All-in (push)', 'Limp', 'Sadece check'], dogru: 1,
       aciklama: 'Kısa yığınla oyalanmak yerine all-in yapmak hem fold ettirir hem de güçlü elin değerini korur.' },
     { tur: 'secmeli', soru: 'Turnuvada blind\'ler artarken beklemek neden riskli?', secenekler: ['Blind\'ler fişlerini eritir', 'Rakipler fişini alır', 'Kartlar kötüleşir', 'Risk yok'], dogru: 0,
-      aciklama: 'Her elde blind ödersin. Fiş yığının küçüldükçe oyun gücün azalır, bu yüzden bekleyemezsin.' },
+      aciklama: 'Her elde blind ödersin. Fiş yığın küçüldükçe oyundaki gücün azalır, bu yüzden bekleyemezsin.' },
   ],
   gorev: {
     tur: 'masa', botlar: ['pasifAcemi', 'sikiPasif', 'gevsekAgresif', 'blofcu', 'akilli'],

@@ -20,7 +20,7 @@ export default {
       baslik: 'Blöf ne kadar fold gerektirir?',
       metin:
         'Pot 100, sen 50 bahis açtın. Rakip fold ederse 100 kazanırsın, call ederse 50 kaybedersin. Blöfün kâr getirmesi için rakibin en az **bahis ÷ (pot + bahis)** oranında fold etmesi gerekir: 50 ÷ 150 = **%33**.\n\n' +
-        'Yani her üç rakipten birinden fazlası fold ediyorsa bu blöf kârlıdır. Küçük bahis küçük fold oranı yeter; ama rakip "hiç fold etmez" tipse hesap geçersiz.\n\n' +
+        'Yani her üç rakipten birinden fazlası fold ediyorsa bu blöf kârlıdır. Küçük bahis için küçük bir fold oranı yeterlidir; ama rakip "hiç fold etmez" tipse hesap geçersiz.\n\n' +
         'Bu yüzden blöf yapmadan önce rakibin kim olduğunu bilmek gerekir.',
     },
     {
@@ -34,7 +34,7 @@ export default {
       baslik: 'Rakip tipleri: agresif taraf',
       metin:
         '**gevsekAgresif** (LAG): çok el oynar ve sık raise eder. Geniş aralıktan oynadığı için her bahsi güçlü sanma; orta güçte elinle call edebilirsin. Sabırlı ol, güçlü elin gelince cezalandır.\n\n' +
-        '**blofcu**: sık sık, büyük bahislerle blöf yapar. Ona karşı korkma: orta güçte bir el ile (örn. top pair) call etmek çoğu zaman kârlıdır. Onu blöf yaparken yakala.\n\n' +
+        '**blofcu**: sık sık, büyük bahislerle blöf yapar. Ondan korkma: orta güçte bir el ile (örn. top pair) call etmek çoğu zaman kârlıdır. Onu blöf yaparken yakala.\n\n' +
         '**akilli**: matematiği kullanır, dengeli oynar, pot oranını ve olasılığı bilir. Bariz bir zayıflığı yoktur; ona karşı en iyi yol kendi matematiğini doğru yapmak. Blöfü ona karşı çok seyrek kullan.',
     },
   ],

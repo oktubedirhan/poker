@@ -28,7 +28,7 @@ export default {
       metin:
         'Raise keyfi küçük olamaz: **en az, son bahis ya da raise artışı kadar** artırmalısın. Preflop\'ta bu artış en az büyük blind kadardır.\n\n' +
         'Örnek: blind\'ler 10/20. Rakip 60\'a raise etti (artış 40). Senin en az raise\'in 60 + 40 = **100\'e** olur.\n\n' +
-        'Çok küçük miktarla "raise" yapıp kimseyi korkutmak mümkün olmasın diye bu kural var.',
+        'Çok küçük bir "raise" ile kimseyi zorlamak mümkün olmasın diye bu kural var.',
     },
     {
       baslik: 'All-in ve sıra',
