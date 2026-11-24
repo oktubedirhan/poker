@@ -441,10 +441,11 @@ a.dugme {
   }
   .oturum__alan .koltuk__ad { font-size: 14px; }
   .oturum__alan .koltuk__cip { font-size: 13px; }
-  /* Bahis fişi kaymaları (--k: 1): fiş ad kutusunun dışında, pot/board'a değmeden */
+  /* Bahis fişi kaymaları (--k: 1): fiş ad kutusunun dışında, pot/board'a değmeden.
+     6 kişide yan fişler board'un üstünde/altında kalır (en geniş hal: 5 kart + 4 haneli fiş). */
   .oturum__alan .masa[data-oyuncu-sayisi='2'] .koltuk[data-koltuk='1'],
   .oturum__alan .masa[data-oyuncu-sayisi='4'] .koltuk[data-koltuk='2'],
-  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='3'] { --bx: 0; --by: 76; }
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='3'] { --bx: -90; --by: 39; } /* üst koltuk: fiş ad kutusunun solunda (altında pot var; rozetler sağda) */
   .oturum__alan .masa[data-oyuncu-sayisi='3'] .koltuk[data-koltuk='1'] { --bx: 0; --by: 80; }
   .oturum__alan .masa[data-oyuncu-sayisi='3'] .koltuk[data-koltuk='2'] { --bx: 0; --by: 80; }
   .oturum__alan .masa[data-oyuncu-sayisi='4'] .koltuk[data-koltuk='1'] { --bx: 80; --by: 0; }
@@ -453,10 +454,10 @@ a.dugme {
   .oturum__alan .masa[data-oyuncu-sayisi='5'] .koltuk[data-koltuk='2'] { --bx: -10; --by: 80; }
   .oturum__alan .masa[data-oyuncu-sayisi='5'] .koltuk[data-koltuk='3'] { --bx: 10; --by: 80; }
   .oturum__alan .masa[data-oyuncu-sayisi='5'] .koltuk[data-koltuk='4'] { --bx: -80; --by: -14; }
-  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='1'] { --bx: 84; --by: -30; }
-  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='2'] { --bx: 84; --by: 26; }
-  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='4'] { --bx: -84; --by: 26; }
-  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='5'] { --bx: -84; --by: -30; }
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='1'] { --bx: 84; --by: -18; }
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='2'] { --bx: 84; --by: 0; }
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='4'] { --bx: -84; --by: 0; }
+  .oturum__alan .masa[data-oyuncu-sayisi='6'] .koltuk[data-koltuk='5'] { --bx: -84; --by: -18; }
   .oturum__alan .masa[data-oyuncu-sayisi] {
     --kw-rakip: 42px;
   }
@@ -501,7 +502,8 @@ a.dugme {
   color: #3a3d47;
 }
 
-/* "Deste karıldı" bildirimi: ekranın üstünde, koç balonunu ve eylem çubuğunu örtmesin */
+/* Genel bildirim (ör. hata): ekranın üstünde, koç balonunu ve eylem çubuğunu örtmesin.
+   "Deste karıldı" notu artık board üstünde (.masa__not). */
 .bildirim {
   top: calc(var(--space-3) + env(safe-area-inset-top));
   bottom: auto;

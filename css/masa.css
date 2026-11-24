@@ -62,8 +62,34 @@
   gap: 14px;
 }
 .masa__board {
+  position: relative;
   display: flex;
   gap: 4px;
+}
+/* Board üstündeki kısa not (ör. "Deste karıldı"): boş yuvaların üstünde, masanın başka yerini örtmez */
+.masa__not {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0 var(--space-2);
+  border-radius: 8px;
+  background: rgba(9, 13, 38, 0.88);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  color: var(--altin);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  text-wrap: balance;
+  animation: masa-not-gir 0.25s var(--ease) both;
+}
+@keyframes masa-not-gir {
+  from {
+    opacity: 0;
+  }
 }
 .masa__board .kart {
   --kw: 40px;
@@ -550,6 +576,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .masa__not {
+    animation: none;
+  }
   .koltuk--sirada .koltuk__kimlik {
     animation: none;
   }

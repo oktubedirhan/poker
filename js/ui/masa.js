@@ -105,6 +105,23 @@ export class MasaGorunumu {
     this.koltuklar.get(this.benimId)?.kok.classList.toggle('koltuk--sirada', var_);
   }
 
+  // Board'un boş yuvalarının üstünde kısa not (ör. "Deste karıldı"). Deste yalnızca el başında
+  // karıldığı için o an board boştur; not süre dolunca ya da ilk ortak kart gelince kalkar.
+  // Ekran okuyucuya duyuru ayrıca yapılır (olayMetni), bu yüzden not aria-hidden.
+  boardNotu(metin, sure = 3000) {
+    this.boardNotuKaldir();
+    const not = el('p', { class: 'masa__not', 'aria-hidden': 'true', text: metin });
+    this.board.append(not);
+    this._not = not;
+    this._notZaman = setTimeout(() => this.boardNotuKaldir(), sure);
+  }
+
+  boardNotuKaldir() {
+    clearTimeout(this._notZaman);
+    this._not?.remove();
+    this._not = null;
+  }
+
   // ---------- Olaylar ----------
   // bekle(ms) iptal edilebilir bekleme (denetleyiciden). Olayın görsel etkisini uygular.
   async olay(o, g, bekle, hiz = 1) {
@@ -128,6 +145,7 @@ export class MasaGorunumu {
         await t(260);
         break;
       case 'sokak': {
+        this.boardNotuKaldir();
         this._eylemleriTemizle();
         for (const k of this.koltuklar.values()) this._bahisCiz(k, 0);
         const bas = o.board.length - o.yeniKartlar.length;

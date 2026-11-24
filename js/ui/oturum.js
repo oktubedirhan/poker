@@ -193,7 +193,7 @@ export class MasaOturumu {
     for (const h of ham) {
       const o = gorunurOlay(h, BENIM); // rakip kartı asla arayüze girmez
       this.sayac?.olay(o);
-      if (o.tur === 'karildi' && o.mod === 'ayakkabi') bildirim('Deste karıldı: sayma sıfırlandı');
+      if (o.tur === 'karildi' && o.mod === 'ayakkabi') this.gorunum.boardNotu('Deste karıldı, sayma sıfırlandı');
       const metin = olayMetni(o, this.adlar, BENIM);
       if (o.tur !== 'kartDagitildi') duyur(metin);
       if (o.tur === 'yakildi' && this.tip === 'yonlendirmeli') duyur('Bir kart yakıldı.');

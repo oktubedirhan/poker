@@ -1,6 +1,6 @@
 // Uygulama kabuğunu önbelleğe alır; internet yokken de Poker Okulu açılır.
 // Dosyalar değiştiğinde VERSION'ı artır ki telefonlar yeni sürümü alsın.
-const VERSION = 'v4';
+const VERSION = 'v5';
 const CACHE = `poker-${VERSION}`;
 const SHELL = [
   './',
